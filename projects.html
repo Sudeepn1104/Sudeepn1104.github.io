@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects | Sudeep Nayak</title>
+<meta name="description" content="Sudeep Nayak, AIML engineering student building ML systems with monitoring and retraining.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="index.html">Sudeep Nayak</a><nav aria-label="Main"><a href="index.html">Home</a><a href="projects.html" aria-current="page">Projects</a><a href="experience.html">Experience</a><a href="contact.html">Contact</a></nav></div></header>
+<main>
+<section><div class="wrap"><h1>Projects</h1>
+<article class="card featured">
+<span class="status"><span class="dot g"></span>Live and deployed</span>
+<h2>Tiny MLOps Observatory</h2>
+<p>A dashboard that watches a loan-default model for data drift and performance drops, retrains it when a rule fires, and compares v1 with v2 before promoting.</p>
+<dl>
+<dt>The problem</dt><dd>Models fail quietly after deployment. Input checks alone miss some failures.</dd>
+<dt>What I found</dt><dd>When the rule behind defaults changes but the inputs look normal, drift stays green while AUC falls from 0.70 to 0.43. So the retrain rule uses both drift and live performance.</dd>
+<dt>What I built</dt><dd>PSI and KS drift tests from scratch, a retrain rule, a model registry, champion versus challenger promotion, a drift injector for live demos, and a model card that lists the limits.</dd>
+</dl>
+<ul class="tags"><li>Python</li><li>scikit-learn</li><li>scipy</li><li>Streamlit</li><li>plotly</li></ul>
+<div class="shots"><img src="assets/monitoring.png" alt="Monitoring tab with drift heatmap and metric trends" onerror="this.remove()"><img src="assets/registry.png" alt="Model registry comparing v1 and v2" onerror="this.remove()"></div>
+<div class="btns"><a class="btn primary" href="https://mlops-observatory-sudeepunayak.streamlit.app/">Open live app</a><a class="btn" href="https://github.com/Sudeepn1104/MLOps-Observatory">Read the code</a></div>
+</article>
+<article class="card"><h2>AdharaAI</h2>
+<p>An AI-powered simplifier for Indian legal documents. Open source under Apache 2.0.</p>
+<ul class="tags"><li>Jupyter Notebook</li><li>NLP</li></ul>
+<p><span class="todo">Add 2 lines: what it does, which model you used, and one result.</span></p>
+<div class="btns"><a class="btn" href="https://github.com/Sudeepn1104/AdharaAI">Read the code</a></div></article>
+<article class="card"><h2>JalSetu Lite</h2>
+<p>A Beckn-based open network that brings municipal (BWSSB) and private water tanker logistics together, with price benchmarking and OTP-based delivery confirmation.</p>
+<ul class="tags"><li>HTML</li><li>Beckn protocol</li></ul>
+<p><span class="todo">Add what you built yourself and who it is for.</span></p>
+<div class="btns"><a class="btn" href="https://github.com/Sudeepn1104/jalsetu-lite">Read the code</a></div></article>
+</div></section></main>
+<footer class="site"><div class="wrap"><p>Sudeep Nayak, AIML engineering, MITE Moodbidri. Source on <a href="https://github.com/Sudeepn1104">GitHub</a>.</p></div></footer>
+<script src="script.js"></script></body></html>
