@@ -6,6 +6,7 @@
 <title>Sudeep Nayak — ML &amp; MLOps Engineer</title>
 <meta name="description" content="Sudeep Nayak, third-year AI/ML engineering student at MITE Moodbidri. Interactive portfolio: MLOps Observatory, AdharaAI and JalSetu Lite.">
 <meta property="og:title" content="Sudeep Nayak — ML &amp; MLOps Engineer">
+<meta property="og:image" content="https://sudeepn1104.github.io/profile.jpg">
 <meta property="og:description" content="I build ML systems that notice when they stop working. Try my projects live on this page.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,6 +76,12 @@
   /* hero */
   .hero { padding: 72px 0 56px; position: relative; }
   .hero-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: center; }
+  .who { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+  .avatar { width: 76px; height: 76px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); flex: none; }
+  .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; border: 3px solid var(--bg); }
+  .who-name { font: 600 18px/1.2 "Space Grotesk", sans-serif; }
+  .who-sub { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .who .badge { margin: 8px 0 0; }
   .badge { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); font-weight: 500; margin-bottom: 22px; }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); position: relative; }
   .dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--ok); opacity: 0; animation: ping 2s infinite; }
@@ -285,9 +292,16 @@
     <div class="hero">
       <div class="hero-grid">
         <div>
-          <div class="badge"><span class="dot"></span>Open to ML / AI internships &amp; roles</div>
+          <div class="who">
+            <div class="avatar"><img src="profile.jpg" alt="Photo of Sudeep Nayak" width="70" height="70"></div>
+            <div>
+              <div class="who-name">Sudeep U Nayak</div>
+              <div class="who-sub">AI &amp; ML Engineering · MITE, Moodbidri</div>
+              <div class="badge"><span class="dot"></span>Open to ML / AI internships &amp; roles</div>
+            </div>
+          </div>
           <h1>I build <span class="grad">ML systems</span> that notice when they stop working.</h1>
-          <p class="lead">I'm <b>Sudeep Nayak</b>, a third-year AI/ML engineering student at MITE, Moodbidri, working on <span class="rotator mono" id="rotator">MLOps</span>. I ship projects with tests, CI and live demos, and you can try them right on this page.</p>
+          <p class="lead">I'm a third-year AI/ML engineering student working on <span class="rotator mono" id="rotator">MLOps</span>. I ship projects with tests, CI and live demos, and you can try them right on this page.</p>
           <div class="cta">
             <a class="btn primary" href="#projects">Try my projects
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
