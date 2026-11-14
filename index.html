@@ -3,170 +3,279 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sudeep Nayak — AI/ML Engineer</title>
-<meta name="description" content="Portfolio of Sudeep Nayak, an AI/ML undergraduate building NLP, MLOps and public-infrastructure projects.">
+<title>Sudeep Nayak — ML &amp; MLOps Engineer</title>
+<meta name="description" content="Sudeep Nayak, third-year AI/ML engineering student at MITE Moodbidri. Interactive portfolio: MLOps Observatory, AdharaAI and JalSetu Lite.">
+<meta property="og:title" content="Sudeep Nayak — ML &amp; MLOps Engineer">
+<meta property="og:description" content="I build ML systems that notice when they stop working. Try my projects live on this page.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fafaf7;
+    --bg: #f7f7f2;
     --surface: #ffffff;
-    --text: #16181d;
-    --muted: #5b616e;
-    --line: #e4e4de;
+    --surface-2: #f1f1ea;
+    --text: #14161b;
+    --muted: #5a606c;
+    --line: #e2e2da;
     --accent: #2f5bea;
+    --accent-2: #7c3aed;
     --accent-soft: #e8eefe;
-    --tag: #f0f0ea;
+    --ok: #16a34a; --ok-soft: #dcfce7;
+    --warn: #d97706; --warn-soft: #fef3c7;
+    --bad: #dc2626; --bad-soft: #fee2e2;
+    --on-accent: #ffffff;
+    --shadow: 0 1px 2px rgba(20,22,27,.04), 0 8px 24px rgba(20,22,27,.06);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0e1014;
-      --surface: #161920;
-      --text: #e8e9ec;
-      --muted: #9aa0ad;
-      --line: #262a33;
-      --accent: #7c9cff;
-      --accent-soft: #1b2340;
-      --tag: #1d2028;
+      --bg: #0c0e12; --surface: #14171d; --surface-2: #1a1e26; --text: #e9eaee; --muted: #9aa1ae; --line: #252a33;
+      --accent: #7c9cff; --accent-2: #b38cff; --accent-soft: #1a2240;
+      --ok: #4ade80; --ok-soft: #0f2a1a; --warn: #fbbf24; --warn-soft: #2d230b; --bad: #f87171; --bad-soft: #321414;
+      --on-accent: #0c0e12; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0e1014;
-    --surface: #161920;
-    --text: #e8e9ec;
-    --muted: #9aa0ad;
-    --line: #262a33;
-    --accent: #7c9cff;
-    --accent-soft: #1b2340;
-    --tag: #1d2028;
+    --bg: #0c0e12; --surface: #14171d; --surface-2: #1a1e26; --text: #e9eaee; --muted: #9aa1ae; --line: #252a33;
+    --accent: #7c9cff; --accent-2: #b38cff; --accent-soft: #1a2240;
+    --ok: #4ade80; --ok-soft: #0f2a1a; --warn: #fbbf24; --warn-soft: #2d230b; --bad: #f87171; --bad-soft: #321414;
+    --on-accent: #0c0e12; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.65 Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; }
+  h1, h2, h3 { font-family: "Space Grotesk", Inter, sans-serif; }
   .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 
-  /* nav */
-  header.nav {
-    position: sticky; top: 0; z-index: 10;
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-  }
-  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  .brand { font-weight: 600; text-decoration: none; letter-spacing: -0.01em; }
+  /* progress + nav */
+  #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 30; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+  header.nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .brand { font: 600 17px "Space Grotesk", sans-serif; text-decoration: none; }
   .brand span { color: var(--accent); }
-  nav { display: flex; gap: 22px; align-items: center; }
-  nav a { text-decoration: none; color: var(--muted); font-size: 14px; }
+  nav { display: flex; gap: 4px; align-items: center; }
+  nav a { text-decoration: none; color: var(--muted); font-size: 14px; padding: 6px 10px; border-radius: 8px; }
   nav a:hover { color: var(--text); }
-  .theme-btn {
-    border: 1px solid var(--line); background: var(--surface); color: var(--text);
-    width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 15px;
-  }
+  nav a.active { color: var(--text); background: var(--surface-2); }
+  .icon-btn { border: 1px solid var(--line); background: var(--surface); color: var(--text); width: 36px; height: 36px; border-radius: 9px; cursor: pointer; display: grid; place-items: center; margin-left: 6px; }
+  .icon-btn svg { width: 17px; height: 17px; }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 11px; font: 500 15px Inter, sans-serif; text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; transition: transform .15s, border-color .15s, box-shadow .15s; }
+  .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+  .btn:disabled { opacity: .55; cursor: default; transform: none; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .btn.sm { padding: 8px 14px; font-size: 14px; }
+  .btn svg { width: 16px; height: 16px; }
 
   /* hero */
-  .hero { padding: 96px 0 72px; }
-  .eyebrow { font-size: 13px; color: var(--accent); letter-spacing: 0.04em; margin: 0 0 18px; }
-  .hero h1 {
-    font-size: clamp(36px, 6vw, 60px); line-height: 1.08; letter-spacing: -0.03em;
-    margin: 0 0 22px; font-weight: 700; max-width: 14ch;
-  }
-  .hero p.lead { font-size: 19px; color: var(--muted); max-width: 58ch; margin: 0 0 34px; }
-  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 11px 18px; border-radius: 10px; font-weight: 500; font-size: 15px;
-    text-decoration: none; border: 1px solid var(--line); background: var(--surface);
-  }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .btn.primary { color: #0e1014; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #0e1014; } }
-  .btn:hover { transform: translateY(-1px); }
+  .hero { padding: 72px 0 56px; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: center; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: var(--ok-soft); color: var(--ok); font-weight: 500; margin-bottom: 22px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); position: relative; }
+  .dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--ok); opacity: 0; animation: ping 2s infinite; }
+  @keyframes ping { 0% { transform: scale(.6); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
+  .hero h1 { font-size: clamp(38px, 5.6vw, 64px); line-height: 1.04; letter-spacing: -0.035em; margin: 0 0 20px; }
+  .grad { background: linear-gradient(100deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .rotator { display: inline-block; min-width: 1ch; border-right: 3px solid var(--accent); padding-right: 4px; color: var(--text); font-weight: 500; animation: caret 1s steps(1) infinite; }
+  @keyframes caret { 50% { border-color: transparent; } }
+  .lead { font-size: 18.5px; color: var(--muted); max-width: 54ch; margin: 0 0 30px; }
+  .lead b { color: var(--text); font-weight: 600; }
+  .cta { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .hero-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
+  .hc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 10px; }
+  .hc-title { font-size: 12px; color: var(--muted); }
+  .pill { font: 600 11px "JetBrains Mono", monospace; padding: 4px 9px; border-radius: 999px; letter-spacing: .03em; white-space: nowrap; }
+  .pill.ok { background: var(--ok-soft); color: var(--ok); }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.bad { background: var(--bad-soft); color: var(--bad); }
+  .heat { display: grid; grid-template-columns: 92px repeat(10, 1fr); gap: 4px; align-items: center; }
+  .heat .lbl { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .heat .cell { aspect-ratio: 1; border-radius: 4px; transition: background .35s; }
+  .heat .cell.ok { background: color-mix(in srgb, var(--ok) 70%, var(--surface)); }
+  .heat .cell.warn { background: var(--warn); }
+  .heat .cell.bad { background: var(--bad); }
+  .heat .axis { font-size: 10px; color: var(--muted); text-align: center; }
+  .hc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 13px; color: var(--muted); gap: 10px; flex-wrap: wrap; }
+  .hc-foot a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 18px; background: var(--surface); overflow: hidden; }
+  .stats div { padding: 22px 24px; border-right: 1px solid var(--line); }
+  .stats div:last-child { border-right: 0; }
+  .stats b { display: block; font: 700 34px/1.1 "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
+  .stats span { font-size: 13.5px; color: var(--muted); }
 
   /* sections */
-  section { padding: 64px 0; border-top: 1px solid var(--line); }
-  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 32px; }
+  section { padding: 84px 0 20px; }
+  .sec-head { margin-bottom: 34px; max-width: 640px; }
   .sec-head .num { color: var(--accent); font-size: 13px; }
-  .sec-head h2 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
+  .sec-head h2 { margin: 6px 0 10px; font-size: clamp(28px, 3.6vw, 38px); letter-spacing: -0.025em; line-height: 1.1; }
+  .sec-head p { margin: 0; color: var(--muted); }
 
-  .about { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; }
-  .about p { margin: 0 0 16px; color: var(--muted); }
-  .about p strong { color: var(--text); font-weight: 600; }
-  .facts { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
-  .facts li { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .facts li:last-child { border-bottom: 0; }
-  .facts li span:first-child { color: var(--muted); }
-  .facts li span:last-child { text-align: right; }
+  /* glance */
+  .glance { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .g-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  .g-card h3 { margin: 0 0 12px; font-size: 13px; font-family: "JetBrains Mono", monospace; font-weight: 500; color: var(--accent); }
+  .g-card ul { margin: 0; padding: 0; list-style: none; }
+  .g-card li { padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+  .g-card li:last-child { border-bottom: 0; }
+  .g-card li span { color: var(--muted); }
 
   /* projects */
-  .projects { display: grid; gap: 22px; }
-  .proj {
-    display: grid; grid-template-columns: 1fr 1.15fr; gap: 36px;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 32px;
-    transition: border-color .15s;
-  }
-  .proj:hover { border-color: var(--accent); }
-  .idx { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-  .kind { font-size: 12px; color: var(--accent); margin-bottom: 10px; }
-  .proj h3 { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.02em; }
-  .proj .sum { margin: 0 0 20px; color: var(--muted); font-size: 15px; }
-  .stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
-  .stat { background: var(--accent-soft); border-radius: 10px; padding: 10px 14px; min-width: 120px; }
-  .stat b { display: block; font-size: 18px; letter-spacing: -0.01em; }
+  .proj { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; margin-bottom: 26px; box-shadow: var(--shadow); }
+  .proj-head { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; padding: 32px 32px 26px; }
+  .idx { font-size: 12px; color: var(--muted); }
+  .kind { font-size: 12px; color: var(--accent); margin: 4px 0 8px; }
+  .proj h3 { margin: 0 0 10px; font-size: 30px; letter-spacing: -0.025em; }
+  .proj .sum { margin: 0 0 18px; color: var(--muted); }
+  .stat-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .stat { background: var(--accent-soft); border-radius: 11px; padding: 9px 14px; }
+  .stat b { display: block; font: 700 18px "Space Grotesk", sans-serif; }
   .stat span { font-size: 12px; color: var(--muted); }
   .links { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn.sm { padding: 8px 14px; font-size: 14px; }
-  .hl { margin: 0 0 22px; padding: 0; list-style: none; }
-  .hl li { position: relative; padding: 0 0 12px 22px; font-size: 15px; color: var(--muted); }
+  .hl { margin: 0 0 18px; padding: 0; list-style: none; }
+  .hl li { position: relative; padding: 0 0 11px 22px; font-size: 15px; color: var(--muted); }
   .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
   .hl b { color: var(--text); font-weight: 600; }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--tag); color: var(--muted); }
+  .tag { font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+
+  /* demo panel */
+  .demo { border-top: 1px solid var(--line); background: var(--surface-2); }
+  .demo-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 32px; border: 0; background: transparent; color: var(--text); cursor: pointer; font: 600 15px Inter, sans-serif; text-align: left; }
+  .demo-toggle:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  .demo-toggle .try { display: inline-flex; align-items: center; gap: 10px; }
+  .demo-toggle .try i { font-style: normal; font: 600 11px "JetBrains Mono", monospace; padding: 3px 8px; border-radius: 6px; background: linear-gradient(100deg, var(--accent), var(--accent-2)); color: #fff; flex: none; }
+  .demo-toggle .chev { transition: transform .25s; color: var(--muted); flex: none; }
+  .demo-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .demo-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+  .demo-body > div { overflow: hidden; }
+  .demo.open .demo-body { grid-template-rows: 1fr; }
+  .demo-inner { padding: 4px 32px 30px; }
+  .demo-note { font-size: 12.5px; color: var(--muted); margin: 0 0 18px; }
+
+  .obs { display: grid; grid-template-columns: 300px 1fr; gap: 26px; }
+  .ctrl { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+  .ctrl label { font-size: 13.5px; font-weight: 600; display: flex; justify-content: space-between; }
+  .ctrl label output { font: 500 12px "JetBrains Mono", monospace; color: var(--accent); }
+  .ctrl small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+  input[type=range] { width: 100%; accent-color: var(--accent); margin: 6px 0 0; }
+  .status { border-radius: 12px; padding: 12px 14px; font-size: 13.5px; }
+  .status.ok { background: var(--ok-soft); color: var(--ok); }
+  .status.warn { background: var(--warn-soft); color: var(--warn); }
+  .status.bad { background: var(--bad-soft); color: var(--bad); }
+  .status b { display: block; font-size: 14px; margin-bottom: 2px; }
+  .viz { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+  .viz h4 { margin: 0 0 10px; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .viz h4 span { font-weight: 400; color: var(--muted); font-size: 12px; }
+  .legend { display: flex; gap: 12px; font-size: 11.5px; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+  svg.auc { width: 100%; height: auto; display: block; overflow: visible; }
+  .registry { margin-top: 14px; display: none; }
+  .registry.show { display: block; }
+  .reg-row { display: grid; grid-template-columns: 40px 1fr 54px; gap: 10px; align-items: center; font-size: 13px; margin-bottom: 6px; }
+  .bar { height: 10px; border-radius: 6px; background: var(--line); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; border-radius: 6px; background: var(--muted); transition: width .6s; }
+  .bar i.win { background: var(--ok); }
+
+  .adh { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .chip { font: 500 13px Inter, sans-serif; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; }
+  .chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  textarea { width: 100%; min-height: 160px; resize: vertical; padding: 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: 14.5px/1.6 Inter, sans-serif; }
+  .out { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-height: 160px; }
+  .out h5 { margin: 0 0 8px; font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
+  .plain { font-size: 14.5px; margin: 0 0 16px; }
+  .plain mark { background: var(--accent-soft); color: var(--accent); border-radius: 4px; padding: 0 3px; }
+  .risk { border-left: 3px solid var(--bad); padding: 8px 12px; background: var(--bad-soft); border-radius: 0 10px 10px 0; margin-bottom: 8px; font-size: 13.5px; }
+  .risk.medium { border-color: var(--warn); background: var(--warn-soft); }
+  .risk b { display: block; font-weight: 600; }
+  .risk em { display: block; font-style: normal; color: var(--muted); margin-top: 3px; }
+  .safe { color: var(--ok); font-size: 14px; margin: 0; }
+
+  .jal { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .rail { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .rail span { font: 500 11px "JetBrains Mono", monospace; padding: 5px 9px; border-radius: 7px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); transition: all .25s; }
+  .rail span.done { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, var(--line)); }
+  .rail span.now { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+  .rail span.disputed { color: #fff; background: var(--bad); border-color: var(--bad); }
+  .field { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .field label { font-size: 12.5px; color: var(--muted); display: block; }
+  .field input, .field select { width: 100%; margin-top: 4px; padding: 9px 11px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: 14px Inter, sans-serif; }
+  .log { font: 12.5px/1.6 "JetBrains Mono", monospace; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-height: 200px; max-height: 280px; overflow: auto; }
+  .log p { margin: 0 0 6px; }
+  .log .g { color: var(--ok); } .log .r { color: var(--bad); } .log .y { color: var(--warn); } .log .m { color: var(--muted); }
 
   /* skills */
-  .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .skill-col h4 { margin: 0 0 12px; font-size: 13px; color: var(--muted); font-weight: 500; }
-  .skill-col ul { list-style: none; padding: 0; margin: 0; }
-  .skill-col li { padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+  .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .sk { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .sk h4 { margin: 0 0 12px; font: 500 12px "JetBrains Mono", monospace; color: var(--accent); }
+  .sk ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .sk li { font-size: 13.5px; padding: 4px 10px; border-radius: 8px; background: var(--surface-2); }
 
   /* contact */
-  .contact { text-align: center; padding: 88px 0; }
-  .contact h2 { font-size: clamp(28px, 4.5vw, 42px); letter-spacing: -0.02em; margin: 0 0 14px; }
-  .contact p { color: var(--muted); margin: 0 auto 30px; max-width: 48ch; }
+  .contact { margin: 84px 0 0; padding: 64px 32px; border-radius: 26px; text-align: center; background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--accent) 22%, var(--surface)), var(--surface) 55%); border: 1px solid var(--line); }
+  .contact h2 { font-size: clamp(30px, 4.6vw, 48px); letter-spacing: -0.03em; margin: 0 0 12px; line-height: 1.1; }
+  .contact p { color: var(--muted); max-width: 50ch; margin: 0 auto 28px; }
   .contact .cta { justify-content: center; }
-  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; font-size: 13px; color: var(--muted); }
+  footer { padding: 36px 0 48px; font-size: 13px; color: var(--muted); }
   footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
-  @media (max-width: 760px) {
+  #toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 10px; font-size: 14px; opacity: 0; pointer-events: none; transition: all .25s; z-index: 40; max-width: calc(100% - 32px); }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid, .proj-head, .obs, .adh, .jal { grid-template-columns: 1fr; }
+    .glance { grid-template-columns: 1fr; }
+    .skills { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stats div:nth-child(2) { border-right: 0; }
+    .stats div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 600px) {
     .wrap { padding: 0 16px; }
     nav a.hide-sm { display: none; }
-    .hero { padding: 64px 0 52px; }
-    .about { grid-template-columns: 1fr; gap: 24px; }
-    .proj { grid-template-columns: 1fr; gap: 8px; padding: 22px; }
-    .skills { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 44px 0 40px; }
+    .proj-head { padding: 22px 18px 18px; gap: 6px; }
+    .demo-toggle { padding: 14px 18px; font-size: 14px; }
+    .demo-inner { padding: 4px 18px 22px; }
+    .skills { grid-template-columns: 1fr; }
+    .heat { grid-template-columns: 78px repeat(10, 1fr); gap: 3px; }
+    .contact { padding: 48px 20px; }
+    .field { grid-template-columns: 1fr; }
+    .stats div { padding: 18px; }
+    .stats b { font-size: 28px; }
   }
 </style>
 </head>
 <body>
+<div id="progress"></div>
 
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#top">sudeep<span>.</span>nayak</a>
-    <nav>
-      <a class="hide-sm" href="#about">About</a>
+    <nav aria-label="Main">
+      <a class="hide-sm" href="#glance">At a glance</a>
       <a href="#projects">Projects</a>
       <a class="hide-sm" href="#skills">Skills</a>
       <a href="#contact">Contact</a>
-      <button class="theme-btn" id="theme" aria-label="Toggle dark mode">◐</button>
+      <button class="icon-btn" id="theme" aria-label="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
     </nav>
   </div>
 </header>
@@ -174,165 +283,683 @@
 <main id="top">
   <div class="wrap">
     <div class="hero">
-      <p class="eyebrow mono">// AI · ML · MLOps</p>
-      <h1>Hi, I'm Sudeep. I build machine learning that ships.</h1>
-      <p class="lead">A third-year AI/ML engineering student at MITE, Moodbidri, turning models into useful tools — from simplifying Indian legal documents with NLP to monitoring production models for data drift.</p>
-      <div class="cta">
-        <a class="btn primary" href="#projects">View projects →</a>
-        <a class="btn" href="https://github.com/Sudeepn1104" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn" href="https://huggingface.co/Sudeepn1104" target="_blank" rel="noopener">Hugging Face</a>
+      <div class="hero-grid">
+        <div>
+          <div class="badge"><span class="dot"></span>Open to ML / AI internships &amp; roles</div>
+          <h1>I build <span class="grad">ML systems</span> that notice when they stop working.</h1>
+          <p class="lead">I'm <b>Sudeep Nayak</b>, a third-year AI/ML engineering student at MITE, Moodbidri, working on <span class="rotator mono" id="rotator">MLOps</span>. I ship projects with tests, CI and live demos, and you can try them right on this page.</p>
+          <div class="cta">
+            <a class="btn primary" href="#projects">Try my projects
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn" href="https://www.linkedin.com/in/sudeep-u-nayak-b69313374/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://github.com/Sudeepn1104" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+
+        <div class="hero-card reveal" aria-label="Animated data-drift heatmap">
+          <div class="hc-top">
+            <span class="hc-title mono">observatory · drift per feature</span>
+            <span class="pill ok" id="heroPill">STABLE</span>
+          </div>
+          <div class="heat" id="heroHeat"></div>
+          <div class="hc-foot">
+            <span>PSI across 10 incoming batches, computed live</span>
+            <a href="#obs-demo" data-open="obs">Break it yourself ↓</a>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="stats reveal" aria-label="Key numbers">
+      <div><b data-count="3">3</b><span>working projects, end to end</span></div>
+      <div><b data-count="132">132</b><span>automated tests passing</span></div>
+      <div><b data-count="30000" data-fmt="k">30k</b><span>real records behind my credit model</span></div>
+      <div><b data-count="110" data-suffix="+">110+</b><span>legal rules written for Indian law</span></div>
     </div>
   </div>
 
-  <section id="about">
+  <section id="glance">
     <div class="wrap">
-      <div class="sec-head"><span class="num mono">01</span><h2>About</h2></div>
-      <div class="about">
-        <div>
-          <p>I'm an <strong>AIML enthusiast</strong> who learns best by building. I enjoy taking an idea from a notebook all the way to something people can actually use — a dashboard, an API, or a deployed model.</p>
-          <p>Lately I've been focused on <strong>NLP for Indian legal text</strong> and on <strong>MLOps</strong>: how to know when a model in production has gone stale, and how to retrain it before anyone notices.</p>
-          <p>I also like problems at the intersection of technology and public good, such as open, interoperable infrastructure for everyday services.</p>
+      <div class="sec-head reveal">
+        <div class="num mono">01 — for recruiters</div>
+        <h2>The 30-second version</h2>
+        <p>What I'm looking for, what I'm good at, and where the proof is.</p>
+      </div>
+      <div class="glance">
+        <div class="g-card reveal">
+          <h3>// looking for</h3>
+          <ul>
+            <li>ML engineer / MLOps internships</li>
+            <li>AI &amp; NLP engineering roles</li>
+            <li>Project collaborations</li>
+            <li><span>Education:</span> B.E. AI &amp; ML, MITE Moodbidri (5th sem)</li>
+          </ul>
         </div>
-        <ul class="facts">
-          <li><span>Focus</span><span>NLP · MLOps</span></li>
-          <li><span>Studying</span><span>B.E. in AI &amp; ML, 5th sem</span></li>
-          <li><span>College</span><span>MITE, Moodbidri</span></li>
-          <li><span>Based in</span><span>Udupi, Karnataka</span></li>
-          <li><span>Open to</span><span>ML / AI roles &amp; internships</span></li>
-        </ul>
+        <div class="g-card reveal">
+          <h3>// what I bring</h3>
+          <ul>
+            <li>Production ML: monitoring, drift detection, retraining</li>
+            <li>NLP for Indian legal text with InLegalBERT</li>
+            <li>APIs and deployment with FastAPI, Docker and CI</li>
+            <li>I implement the maths myself (PSI, KS), so I can explain it</li>
+          </ul>
+        </div>
+        <div class="g-card reveal">
+          <h3>// proof</h3>
+          <ul>
+            <li>3 working projects, all with tests and CI</li>
+            <li>Live Streamlit app for my MLOps Observatory</li>
+            <li>Build for Billions hackathon, NITK Surathkal</li>
+            <li>An interactive demo of each project below ↓</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="projects">
     <div class="wrap">
-      <div class="sec-head"><span class="num mono">02</span><h2>Selected projects</h2></div>
+      <div class="sec-head reveal">
+        <div class="num mono">02 — selected work</div>
+        <h2>Don't just read about my projects. Use them.</h2>
+        <p>Each project has a small live demo built from its real logic. Open one and play with it.</p>
+      </div>
 
-      <div class="projects">
-        <article class="proj">
-          <div class="proj-side">
+      <!-- Observatory -->
+      <article class="proj reveal" id="obs-demo">
+        <div class="proj-head">
+          <div>
             <div class="idx mono">P/01</div>
             <div class="kind mono">MLOps · Model monitoring</div>
             <h3>MLOps Observatory</h3>
             <p class="sum">A health monitor for a credit-default model trained on 30,000 real credit card clients. It spots data drift and performance drops, retrains the model, and promotes v2 only if it beats v1.</p>
             <div class="stat-row">
-              <div class="stat"><b>0.81 → 0.43</b><span>AUC under concept drift, caught</span></div>
-              <div class="stat"><b>63</b><span>automated tests</span></div>
+              <div class="stat"><b>0.81 → 0.43</b><span>AUC collapse it caught</span></div>
+              <div class="stat"><b>63</b><span>tests passing</span></div>
             </div>
             <div class="links">
-              <a class="btn primary sm" href="https://mlops-observatory-sudeepunayak.streamlit.app/" target="_blank" rel="noopener">Live demo ↗</a>
+              <a class="btn primary sm" href="https://mlops-observatory-sudeepunayak.streamlit.app/" target="_blank" rel="noopener">Full live app ↗</a>
               <a class="btn sm" href="https://github.com/Sudeepn1104/MLOPs-Observatory" target="_blank" rel="noopener">Code</a>
             </div>
           </div>
-          <div class="proj-main">
+          <div>
             <ul class="hl">
               <li>Drift tests (<b>PSI</b> and <b>Kolmogorov–Smirnov</b>) implemented from scratch, shown as a per-feature, per-batch heatmap.</li>
-              <li>Retrain rule fires when max PSI &gt; 0.2 or AUC drops by more than 0.05; a model registry compares v1 and v2 on the same holdout.</li>
-              <li>Live drift injector to break the model on purpose. It shows the “silent failure” where PSI stays green while AUC collapses.</li>
+              <li>Retrain rule fires when max PSI &gt; 0.2 or AUC drops by more than 0.05. A model registry compares v1 and v2 on the same holdout.</li>
+              <li>Catches the “silent failure”: when only the rules change, PSI stays green while AUC collapses.</li>
               <li>FastAPI scoring service in a hardened Docker image, with GitHub Actions CI and one-click Render deploy.</li>
             </ul>
             <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span></div>
           </div>
-        </article>
+        </div>
+        <div class="demo" data-demo="obs">
+          <button class="demo-toggle" aria-expanded="false" aria-controls="obs-body">
+            <span class="try"><i>LIVE</i>Break the model: inject drift and watch the alarms</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="demo-body" id="obs-body"><div><div class="demo-inner">
+            <p class="demo-note">A simplified, in-browser version of the Observatory: a logistic model on 5 simulated credit features, scored on 10 batches of 800 clients. PSI and AUC are computed live, with the same thresholds as the real app. Tip: push only <b>concept drift</b> to see the silent failure.</p>
+            <div class="obs">
+              <div class="ctrl">
+                <div>
+                  <label for="inDrift">Input drift <output id="inDriftV">0%</output></label>
+                  <input type="range" id="inDrift" min="0" max="100" value="0">
+                  <small>The clients change: e.g. lower credit limits, different repayment patterns.</small>
+                </div>
+                <div>
+                  <label for="coDrift">Concept drift <output id="coDriftV">0%</output></label>
+                  <input type="range" id="coDrift" min="0" max="100" value="0">
+                  <small>The rules change: same-looking clients, but what predicts default shifts.</small>
+                </div>
+                <div class="status ok" id="obsStatus"><b>Healthy</b>No drift detected.</div>
+                <button class="btn primary sm" id="retrain" style="justify-content:center">Retrain v2 on latest batch</button>
+                <button class="btn sm" id="obsReset" style="justify-content:center">Reset</button>
+              </div>
+              <div class="viz">
+                <h4>PSI per feature × batch <span class="legend"><span><i style="background:var(--ok)"></i>&lt;0.1</span><span><i style="background:var(--warn)"></i>0.1–0.2</span><span><i style="background:var(--bad)"></i>&gt;0.2</span></span></h4>
+                <div class="heat" id="obsHeat"></div>
+                <h4 style="margin-top:20px">Model AUC per batch <span id="aucNow"></span></h4>
+                <svg class="auc" id="aucChart" viewBox="0 0 600 150" role="img" aria-label="AUC per batch"></svg>
+                <div class="registry" id="registry">
+                  <h4>Model registry · fresh holdout batch <span id="regVerdict"></span></h4>
+                  <div class="reg-row"><span class="mono">v1</span><div class="bar"><i id="barV1"></i></div><span class="mono" id="aucV1"></span></div>
+                  <div class="reg-row"><span class="mono">v2</span><div class="bar"><i id="barV2"></i></div><span class="mono" id="aucV2"></span></div>
+                </div>
+              </div>
+            </div>
+          </div></div></div>
+        </div>
+      </article>
 
-        <article class="proj">
-          <div class="proj-side">
+      <!-- AdharaAI -->
+      <article class="proj reveal">
+        <div class="proj-head">
+          <div>
             <div class="idx mono">P/02</div>
             <div class="kind mono">NLP · LegalTech</div>
             <h3>AdharaAI</h3>
             <p class="sum">Upload a rental agreement, court notice or employment contract. AdharaAI flags risky clauses, explains every line in plain English and gives you an action checklist, built for Indian law.</p>
             <div class="stat-row">
-              <div class="stat"><b>30+</b><span>risk rules for Indian law</span></div>
+              <div class="stat"><b>30+</b><span>risk rules</span></div>
               <div class="stat"><b>80+</b><span>plain-English rewrites</span></div>
+              <div class="stat"><b>45</b><span>tests passing</span></div>
             </div>
             <div class="links">
               <a class="btn primary sm" href="https://github.com/Sudeepn1104/AdharaAI" target="_blank" rel="noopener">Code ↗</a>
             </div>
           </div>
-          <div class="proj-main">
+          <div>
             <ul class="hl">
-              <li>Reads PDFs, scanned images (Tesseract OCR) and plain text, then splits clauses with a 4-strategy segmenter for numbered, lettered, WHEREAS and paragraph styles.</li>
+              <li>Reads PDFs, scanned images (Tesseract OCR) and plain text, then splits clauses with a 4-strategy segmenter.</li>
               <li>Clause classifier fine-tuned from <b>InLegalBERT</b> and exported to <b>ONNX</b>, so production runs without PyTorch.</li>
               <li>Privacy-first: no external APIs, and raw document text is deleted within 5 minutes.</li>
-              <li>Hardened FastAPI backend with rate limiting, magic-byte file validation and security headers. CI runs data-quality checks, tests and a Docker build.</li>
+              <li>Hardened FastAPI backend with rate limiting, magic-byte file validation and security headers.</li>
             </ul>
             <div class="tags"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">InLegalBERT</span><span class="tag">ONNX Runtime</span><span class="tag">FastAPI</span><span class="tag">Tesseract</span><span class="tag">Docker</span></div>
           </div>
-        </article>
+        </div>
+        <div class="demo" data-demo="adh">
+          <button class="demo-toggle" aria-expanded="false" aria-controls="adh-body">
+            <span class="try"><i>LIVE</i>Paste a clause and see what AdharaAI flags</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="demo-body" id="adh-body"><div><div class="demo-inner">
+            <p class="demo-note">Runs a subset of AdharaAI's real risk rules and jargon rewrites, taken from its source code, entirely in your browser. Nothing you type leaves the page.</p>
+            <div class="adh">
+              <div>
+                <div class="chips" id="adhChips">
+                  <button class="chip" aria-pressed="true" data-i="0">Eviction</button>
+                  <button class="chip" aria-pressed="false" data-i="1">Deposit</button>
+                  <button class="chip" aria-pressed="false" data-i="2">Lock-in</button>
+                  <button class="chip" aria-pressed="false" data-i="3">A fair clause</button>
+                </div>
+                <textarea id="adhIn" aria-label="Legal clause"></textarea>
+              </div>
+              <div class="out" aria-live="polite">
+                <h5>PLAIN ENGLISH</h5>
+                <p class="plain" id="adhPlain"></p>
+                <h5 id="adhRiskH">RISKS FOUND</h5>
+                <div id="adhRisks"></div>
+              </div>
+            </div>
+          </div></div></div>
+        </div>
+      </article>
 
-        <article class="proj">
-          <div class="proj-side">
+      <!-- JalSetu -->
+      <article class="proj reveal">
+        <div class="proj-head">
+          <div>
             <div class="idx mono">P/03</div>
             <div class="kind mono">Civic tech · Hackathon</div>
             <h3>JalSetu Lite</h3>
             <p class="sum">An open, Beckn-inspired digital public infrastructure network linking citizens, the municipal water board (BWSSB) and private tanker operators in one transparent marketplace.</p>
             <div class="stat-row">
-              <div class="stat"><b>Build for Billions</b><span>hackathon · NITK Surathkal</span></div>
+              <div class="stat"><b>Build for Billions</b><span>NITK Surathkal</span></div>
+              <div class="stat"><b>24</b><span>tests passing</span></div>
             </div>
             <div class="links">
               <a class="btn primary sm" href="https://github.com/Sudeepn1104/jalsetu-lite" target="_blank" rel="noopener">Code ↗</a>
             </div>
           </div>
-          <div class="proj-main">
+          <div>
             <ul class="hl">
               <li>Price benchmarking: private quotes above official BWSSB rates get a red warning tag.</li>
               <li>Delivery proof via server-side HMAC OTP plus a 95% meter-volume check. Three bad OTPs or a short delivery lock the order as disputed.</li>
               <li>Full order lifecycle with race-safe cancellation, and a fixed-amount UPI payment QR per operator.</li>
-              <li>Separate citizen, driver and operator dashboards on a FastAPI + SQLite backend, with backend and frontend test suites in CI.</li>
+              <li>Citizen, driver and operator dashboards on a FastAPI + SQLite backend.</li>
             </ul>
             <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">JavaScript</span><span class="tag">Next.js</span><span class="tag">Docker</span></div>
           </div>
-        </article>
-      </div>
+        </div>
+        <div class="demo" data-demo="jal">
+          <button class="demo-toggle" aria-expanded="false" aria-controls="jal-body">
+            <span class="try"><i>LIVE</i>Book a tanker and try to cheat the delivery check</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="demo-body" id="jal-body"><div><div class="demo-inner">
+            <p class="demo-note">JalSetu's real rules, simulated: BWSSB benchmark rates, the 95% meter check and the 3-strike OTP dispute lock. The demo OTP is shown so you can test both paths. Try a short meter reading or a wrong OTP.</p>
+            <div class="jal">
+              <div>
+                <div class="rail" id="jalRail"></div>
+                <div class="field">
+                  <label>Tanker size<select id="jalCap"><option value="4000">4,000 L</option><option value="5000">5,000 L</option><option value="6000" selected>6,000 L</option><option value="12000">12,000 L</option></select></label>
+                  <label>Private quote (₹)<input id="jalQuote" type="number" inputmode="numeric" value="950"></label>
+                </div>
+                <div class="field">
+                  <label>Meter before (L)<input id="jalM0" type="number" inputmode="numeric" value="10200"></label>
+                  <label>Meter after (L)<input id="jalM1" type="number" inputmode="numeric" value="16000"></label>
+                </div>
+                <div class="field">
+                  <label>Delivery OTP <span class="mono" id="jalOtpHint"></span><input id="jalOtp" inputmode="numeric" maxlength="4" placeholder="4 digits"></label>
+                  <label>&nbsp;<button class="btn primary sm" id="jalGo" type="button" style="width:100%;justify-content:center;margin-top:4px">Search tankers →</button></label>
+                </div>
+                <button class="btn sm" id="jalReset" type="button">Start a new order</button>
+              </div>
+              <div class="log" id="jalLog" aria-live="polite"></div>
+            </div>
+          </div></div></div>
+        </div>
+      </article>
     </div>
   </section>
 
   <section id="skills">
     <div class="wrap">
-      <div class="sec-head"><span class="num mono">03</span><h2>Toolkit</h2></div>
+      <div class="sec-head reveal">
+        <div class="num mono">03 — toolkit</div>
+        <h2>Tools I've actually shipped with</h2>
+        <p>Everything here is used in at least one of the projects above.</p>
+      </div>
       <div class="skills">
-        <div class="skill-col"><h4 class="mono">Languages</h4><ul><li>Python</li><li>JavaScript</li><li>Java</li><li>HTML / CSS</li></ul></div>
-        <div class="skill-col"><h4 class="mono">ML &amp; NLP</h4><ul><li>scikit-learn</li><li>PyTorch &amp; Transformers</li><li>ONNX Runtime</li><li>pandas / NumPy</li></ul></div>
-        <div class="skill-col"><h4 class="mono">MLOps</h4><ul><li>Drift detection (PSI, KS)</li><li>Model registry &amp; retraining</li><li>Docker &amp; Render</li><li>GitHub Actions CI</li></ul></div>
-        <div class="skill-col"><h4 class="mono">Apps &amp; APIs</h4><ul><li>FastAPI</li><li>Streamlit</li><li>SQLite</li><li>Tesseract OCR</li></ul></div>
+        <div class="sk reveal"><h4>// languages</h4><ul><li>Python</li><li>JavaScript</li><li>TypeScript</li><li>Java</li><li>HTML / CSS</li></ul></div>
+        <div class="sk reveal"><h4>// ml &amp; nlp</h4><ul><li>scikit-learn</li><li>PyTorch</li><li>Transformers</li><li>InLegalBERT</li><li>ONNX Runtime</li><li>pandas</li><li>SciPy</li></ul></div>
+        <div class="sk reveal"><h4>// mlops</h4><ul><li>Drift detection (PSI, KS)</li><li>Model registry</li><li>Retraining</li><li>Docker</li><li>GitHub Actions</li><li>Render</li><li>pytest</li></ul></div>
+        <div class="sk reveal"><h4>// apps &amp; apis</h4><ul><li>FastAPI</li><li>Streamlit</li><li>Plotly</li><li>SQLite</li><li>Next.js</li><li>Tesseract OCR</li></ul></div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="contact">
-    <div class="wrap">
-      <h2>Let's build something.</h2>
-      <p>I'm open to ML and AI engineer roles, internships and project collaborations. The fastest way to reach me is email.</p>
+  <div class="wrap">
+    <section id="contact" class="contact reveal">
+      <h2>Let's build something <span class="grad">that ships.</span></h2>
+      <p>I'm open to ML and AI engineer roles, internships and project collaborations. Email is the fastest way to reach me.</p>
       <div class="cta">
         <a class="btn primary" href="mailto:sudeepnayak1104@gmail.com">Email me</a>
+        <button class="btn" id="copyEmail" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy email</button>
         <a class="btn" href="https://www.linkedin.com/in/sudeep-u-nayak-b69313374/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/Sudeepn1104" target="_blank" rel="noopener">GitHub</a>
         <a class="btn" href="https://huggingface.co/Sudeepn1104" target="_blank" rel="noopener">Hugging Face</a>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr">2026</span> Sudeep Nayak</span>
-    <span class="mono">built with plain HTML &amp; CSS</span>
+    <span>© <span id="yr">2026</span> Sudeep Nayak · MITE, Moodbidri</span>
+    <span class="mono">hand-built in HTML, CSS &amp; JS · no frameworks</span>
   </div>
 </footer>
+<div id="toast" role="status"></div>
 
 <script>
-  (function () {
-    var root = document.documentElement, btn = document.getElementById('theme');
-    try { var saved = localStorage.getItem('theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
-    btn.addEventListener('click', function () {
-      var dark = root.dataset.theme ? root.dataset.theme === 'dark'
-        : matchMedia('(prefers-color-scheme: dark)').matches;
-      root.dataset.theme = dark ? 'light' : 'dark';
-      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+(function () {
+  "use strict";
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var root = document.documentElement;
+
+  /* ---------- theme ---------- */
+  try { var saved = localStorage.getItem("theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
+  $("#theme").addEventListener("click", function () {
+    var dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+    drawAuc();
+  });
+  $("#yr").textContent = new Date().getFullYear();
+
+  /* ---------- toast + copy email ---------- */
+  var toastT;
+  function toast(msg) { var t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove("show"); }, 2200); }
+  $("#copyEmail").addEventListener("click", function () {
+    var email = "sudeepnayak1104@gmail.com";
+    var p = navigator.clipboard && navigator.clipboard.writeText ? navigator.clipboard.writeText(email) : Promise.reject();
+    p.then(function () { toast("Email copied: " + email); }, function () { toast(email); });
+  });
+
+  /* ---------- scroll progress + active nav + reveal ---------- */
+  var bar = $("#progress");
+  addEventListener("scroll", function () {
+    var h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + "%";
+  }, { passive: true });
+  var navLinks = $$("nav a");
+  if ("IntersectionObserver" in window) {
+    var secObs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) navLinks.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id); });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    $$("#glance, #projects, #skills, #contact").forEach(function (s) { secObs.observe(s); });
+
+    var rev = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); rev.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    $$(".reveal").forEach(function (el) { rev.observe(el); });
+  } else { $$(".reveal").forEach(function (el) { el.classList.add("in"); }); }
+
+  /* ---------- rotating focus word ---------- */
+  var words = ["MLOps", "legal NLP", "model monitoring", "civic tech"], wi = 0;
+  var rot = $("#rotator");
+  if (!reduce) {
+    setInterval(function () {
+      wi = (wi + 1) % words.length;
+      var w = words[wi], i = 0;
+      rot.textContent = "";
+      var t = setInterval(function () { rot.textContent = w.slice(0, ++i); if (i >= w.length) clearInterval(t); }, 45);
+    }, 2600);
+  }
+
+  /* ---------- count-up stats ---------- */
+  function fmt(n, el) {
+    if (el.dataset.fmt === "k") return n >= 1000 ? Math.round(n / 1000) + "k" : String(n);
+    return n.toLocaleString("en-IN") + (el.dataset.suffix || "");
+  }
+  function runCount() {
+    $$("[data-count]").forEach(function (el) {
+      var target = +el.dataset.count;
+      if (reduce) { el.textContent = fmt(target, el); return; }
+      var t0 = performance.now(), dur = 1300;
+      (function step(t) {
+        var p = Math.min(1, Math.max(0, (t - t0) / dur)), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.round(target * e), el);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
     });
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  })();
+  }
+  if ("IntersectionObserver" in window && !reduce) {
+    new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { runCount(); o.disconnect(); } }, { threshold: 0.4 }).observe($(".stats"));
+  }
+
+  /* ---------- demo accordions ---------- */
+  function openDemo(d, open) {
+    var btn = $(".demo-toggle", d);
+    var willOpen = open === undefined ? !d.classList.contains("open") : open;
+    d.classList.toggle("open", willOpen);
+    btn.setAttribute("aria-expanded", String(willOpen));
+  }
+  $$(".demo").forEach(function (d) { $(".demo-toggle", d).addEventListener("click", function () { openDemo(d); }); });
+  $$("[data-open]").forEach(function (a) {
+    a.addEventListener("click", function () { openDemo($('.demo[data-demo="' + a.dataset.open + '"]'), true); });
+  });
+
+  /* =========================================================
+     1. MLOps Observatory — drift simulator
+     ========================================================= */
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function gauss(r) { var u = 1 - r(), v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function sigmoid(z) { return 1 / (1 + Math.exp(-z)); }
+
+  var FEATS = ["Credit limit", "Age", "Repay status", "Latest bill", "Last payment"];
+  var F = FEATS.length, N = 800, NB = 10, NREF = 2000;
+  var SENS = [1.3, 0.9, 0.55, 0.75, 0.15];
+  var W0 = [-0.6, -0.25, 1.45, 0.35, -0.75], W1 = [0.7, 0.55, -1.1, -0.45, 0.85], B = -1.1;
+
+  function makeNoise(seed, n) { var r = rng(seed), Z = [], U = []; for (var i = 0; i < n; i++) { var z = []; for (var f = 0; f < F; f++) z.push(gauss(r)); Z.push(z); U.push(r()); } return { Z: Z, U: U }; }
+  var REF = makeNoise(7, NREF);
+  var BATCH = []; for (var b0 = 0; b0 <= NB; b0++) BATCH.push(makeNoise(100 + b0, N)); // index NB = holdout
+
+  function realise(noise, shift, conceptMix) {
+    var w = W0.map(function (v, f) { return v * (1 - conceptMix) + W1[f] * conceptMix; });
+    var X = [], y = [];
+    for (var i = 0; i < noise.Z.length; i++) {
+      var x = noise.Z[i].map(function (z, f) { return z + shift[f]; });
+      var s = B; for (var f = 0; f < F; f++) s += w[f] * x[f];
+      X.push(x); y.push(noise.U[i] < sigmoid(s) ? 1 : 0);
+    }
+    return { X: X, y: y };
+  }
+  function train(D, iters) {
+    var w = [0, 0, 0, 0, 0], bias = 0, lr = 0.5, n = D.X.length, f;
+    for (var it = 0; it < iters; it++) {
+      var gw = [0, 0, 0, 0, 0], gb = 0;
+      for (var i = 0; i < n; i++) {
+        var s = bias; for (f = 0; f < F; f++) s += w[f] * D.X[i][f];
+        var e = sigmoid(s) - D.y[i]; gb += e; for (f = 0; f < F; f++) gw[f] += e * D.X[i][f];
+      }
+      bias -= lr * gb / n; for (f = 0; f < F; f++) w[f] -= lr * gw[f] / n;
+    }
+    return { w: w, b: bias };
+  }
+  function auc(model, D) {
+    var s = D.X.map(function (x, i) { var v = model.b; for (var f = 0; f < F; f++) v += model.w[f] * x[f]; return [v, D.y[i]]; });
+    s.sort(function (a, b) { return a[0] - b[0]; });
+    var pos = 0, neg = 0, rankSum = 0;
+    for (var i = 0; i < s.length; i++) { if (s[i][1]) { pos++; rankSum += i + 1; } else neg++; }
+    return pos && neg ? (rankSum - pos * (pos + 1) / 2) / (pos * neg) : 0.5;
+  }
+  // PSI with 10 quantile bins taken from the reference sample
+  var EDGES = [];
+  for (var fq = 0; fq < F; fq++) {
+    var col = REF.Z.map(function (z) { return z[fq]; }).sort(function (a, b) { return a - b; }), e = [];
+    for (var q = 1; q < 10; q++) e.push(col[Math.floor(q * col.length / 10)]);
+    EDGES.push(e);
+  }
+  function psi(values, f) {
+    var cnt = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], e = EDGES[f];
+    for (var i = 0; i < values.length; i++) { var k = 0, v = values[i]; while (k < 9 && v > e[k]) k++; cnt[k]++; }
+    var out = 0; for (k = 0; k < 10; k++) { var a = Math.max(cnt[k] / values.length, 1e-4); out += (a - 0.1) * Math.log(a / 0.1); }
+    return out;
+  }
+  function shiftFor(lvl, b) { var ramp = (b + 1) / NB; return SENS.map(function (s) { return -lvl * ramp * s; }); }
+  function level(v) { return v > 0.2 ? "bad" : v > 0.1 ? "warn" : "ok"; }
+
+  var ZERO = [0, 0, 0, 0, 0];
+  var V1 = train(realise(REF, ZERO, 0), 250);
+  var BASE_AUC = auc(V1, realise(BATCH[0], ZERO, 0));
+
+  function buildHeat(el, small) {
+    el.innerHTML = "";
+    var cells = [];
+    FEATS.forEach(function (name, f) {
+      var l = document.createElement("div"); l.className = "lbl"; l.textContent = name; el.appendChild(l);
+      cells.push([]);
+      for (var b = 0; b < NB; b++) { var c = document.createElement("div"); c.className = "cell ok"; el.appendChild(c); cells[f].push(c); }
+    });
+    el.appendChild(document.createElement("div"));
+    for (var b = 0; b < NB; b++) { var a = document.createElement("div"); a.className = "axis mono"; a.textContent = small ? (b === 0 || b === NB - 1 ? "b" + (b + 1) : "") : b + 1; el.appendChild(a); }
+    return cells;
+  }
+  function paintHeat(cells, lvl) {
+    var maxLast = 0;
+    for (var b = 0; b < NB; b++) {
+      var sh = shiftFor(lvl, b);
+      for (var f = 0; f < F; f++) {
+        var vals = BATCH[b].Z.map(function (z) { return z[f] + sh[f]; });
+        var p = psi(vals, f);
+        if (b === NB - 1) maxLast = Math.max(maxLast, p);
+        cells[f][b].className = "cell " + level(p);
+        cells[f][b].title = FEATS[f] + ", batch " + (b + 1) + ": PSI " + p.toFixed(3);
+      }
+    }
+    return maxLast;
+  }
+
+  // hero mini heatmap (auto-animates)
+  var heroCells = buildHeat($("#heroHeat"), true);
+  var heroPill = $("#heroPill");
+  function heroFrame(lvl) {
+    var m = paintHeat(heroCells, lvl);
+    heroPill.className = "pill " + level(m);
+    heroPill.textContent = m > 0.2 ? "RETRAIN NOW" : m > 0.1 ? "WATCH" : "STABLE";
+  }
+  if (reduce) heroFrame(0.8);
+  else { var ht = 0; heroFrame(0); setInterval(function () { if (document.hidden) return; ht += 0.09; heroFrame((Math.sin(ht - Math.PI / 2) + 1) / 2 * 0.95); }, 450); }
+
+  // full demo
+  var obsCells = buildHeat($("#obsHeat"), false);
+  var aucSeries = [], st8 = { inLvl: 0, coLvl: 0 };
+  function evaluate() {
+    var maxPsi = paintHeat(obsCells, st8.inLvl);
+    aucSeries = [];
+    for (var b = 0; b < NB; b++) aucSeries.push(auc(V1, realise(BATCH[b], shiftFor(st8.inLvl, b), st8.coLvl * (b + 1) / NB)));
+    var last = aucSeries[NB - 1], drop = BASE_AUC - last;
+    $("#aucNow").textContent = "baseline " + BASE_AUC.toFixed(2) + " → latest " + last.toFixed(2);
+    var st = $("#obsStatus");
+    if (maxPsi > 0.2 || drop > 0.05) {
+      st.className = "status bad";
+      var why = [];
+      if (maxPsi > 0.2) why.push("max PSI " + maxPsi.toFixed(2) + " > 0.2");
+      if (drop > 0.05) why.push("AUC down " + drop.toFixed(2) + " > 0.05");
+      st.innerHTML = "<b>Retrain now</b>" + why.join(" · ") + (maxPsi <= 0.1 && drop > 0.05 ? "<br>Silent failure: the data looks normal, but the model is wrong." : "");
+    } else if (maxPsi > 0.1 || drop > 0.025) {
+      st.className = "status warn"; st.innerHTML = "<b>Watch</b>Max PSI " + maxPsi.toFixed(2) + ", AUC " + last.toFixed(2) + ". Not past the retrain rule yet.";
+    } else { st.className = "status ok"; st.innerHTML = "<b>Healthy</b>Max PSI " + maxPsi.toFixed(2) + ", AUC " + last.toFixed(2) + "."; }
+    drawAuc();
+    $("#registry").classList.remove("show");
+  }
+  function drawAuc() {
+    var svg = $("#aucChart"); if (!aucSeries.length) return;
+    var cs = getComputedStyle(root), acc = cs.getPropertyValue("--accent").trim(), bad = cs.getPropertyValue("--bad").trim(), line = cs.getPropertyValue("--line").trim(), mut = cs.getPropertyValue("--muted").trim();
+    var W = 600, H = 150, lo = 0.3, hi = 1.0;
+    var px = function (b) { return 34 + b * (W - 54) / (NB - 1); }, py = function (v) { return 10 + (hi - v) / (hi - lo) * (H - 30); };
+    var thr = BASE_AUC - 0.05, g = "";
+    [0.4, 0.6, 0.8, 1.0].forEach(function (v) { g += '<line x1="34" x2="' + (W - 20) + '" y1="' + py(v) + '" y2="' + py(v) + '" stroke="' + line + '" stroke-width="1"/><text x="0" y="' + (py(v) + 4) + '" font-size="14" fill="' + mut + '" font-family="JetBrains Mono, monospace">' + v.toFixed(1) + "</text>"; });
+    g += '<line x1="34" x2="' + (W - 20) + '" y1="' + py(thr) + '" y2="' + py(thr) + '" stroke="' + bad + '" stroke-dasharray="5 5" stroke-width="1.5"/>';
+    g += '<text x="' + (W - 20) + '" y="' + (py(thr) + 16) + '" font-size="14" text-anchor="end" fill="' + bad + '" font-family="JetBrains Mono, monospace">retrain line (−0.05)</text>';
+    g += '<polyline points="' + aucSeries.map(function (v, b) { return px(b) + "," + py(v); }).join(" ") + '" fill="none" stroke="' + acc + '" stroke-width="3" stroke-linejoin="round"/>';
+    aucSeries.forEach(function (v, b) { g += '<circle cx="' + px(b) + '" cy="' + py(v) + '" r="5.5" fill="' + (v < thr ? bad : acc) + '"><title>Batch ' + (b + 1) + ": AUC " + v.toFixed(3) + "</title></circle>"; });
+    svg.innerHTML = g;
+  }
+  var raf = 0;
+  function onSlide() {
+    st8.inLvl = $("#inDrift").value / 100 * 1.4; st8.coLvl = $("#coDrift").value / 100 * 0.6;
+    $("#inDriftV").textContent = $("#inDrift").value + "%"; $("#coDriftV").textContent = $("#coDrift").value + "%";
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(evaluate);
+  }
+  $("#inDrift").addEventListener("input", onSlide); $("#coDrift").addEventListener("input", onSlide);
+  $("#obsReset").addEventListener("click", function () { $("#inDrift").value = 0; $("#coDrift").value = 0; onSlide(); });
+  $("#retrain").addEventListener("click", function () {
+    var V2 = train(realise(BATCH[NB - 1], shiftFor(st8.inLvl, NB - 1), st8.coLvl), 250);
+    var hold = realise(BATCH[NB], shiftFor(st8.inLvl, NB - 1), st8.coLvl);
+    var a1 = auc(V1, hold), a2 = auc(V2, hold), win = a2 >= a1;
+    $("#aucV1").textContent = a1.toFixed(3); $("#aucV2").textContent = a2.toFixed(3);
+    $("#registry").classList.add("show");
+    var b1 = $("#barV1"), b2 = $("#barV2");
+    b1.style.width = "0"; b2.style.width = "0";
+    b1.className = win ? "" : "win"; b2.className = win ? "win" : "";
+    setTimeout(function () { b1.style.width = (a1 * 100) + "%"; b2.style.width = (a2 * 100) + "%"; }, 30);
+    $("#regVerdict").innerHTML = win ? '<span class="pill ok">v2 PROMOTED</span>' : '<span class="pill warn">v1 KEPT</span>';
+    toast(win ? "v2 matches or beats v1 on the holdout, so it's promoted" : "v2 isn't better, so v1 stays active");
+  });
+  evaluate();
+
+  /* =========================================================
+     2. AdharaAI — clause risk + plain English (rules from repo)
+     ========================================================= */
+  var RULES = [
+    { p: /(landlord|owner|lessor|employer|company).{0,80}(terminat|cancel|evict|end|discontinue).{0,60}(without\s+notice|immediately|forthwith|at\s+(his|her|its|their)\s+(sole\s+)?discretion)/i, not: [/mutual\s+(consent|agreement)/i, /both\s+parties/i], lv: "high", r: "The other party can terminate this agreement without giving you any notice.", t: "Negotiate for a minimum 30-day written notice period before termination." },
+    { p: /without\s+(prior\s+)?notice.{0,40}(terminat|vacate|leave|evict)/i, not: [/in\s+case\s+of\s+(default|breach|non[-\s]?payment)/i], lv: "high", r: "This clause allows termination or eviction without any prior notice to you.", t: "Ask for at least 15–30 days written notice to be added explicitly." },
+    { p: /(immediately|forthwith|at\s+once).{0,60}(vacate|leave|evict|remove)/i, not: [], lv: "high", r: "You could be required to vacate immediately, without time to arrange somewhere else to live.", t: "Negotiate for a minimum 7–15 days even in breach scenarios." },
+    { p: /non[-\s]?refundable/i, not: [/subject\s+to\s+deduction/i], lv: "high", r: "The security deposit is marked as non-refundable, which may not be fully enforceable in India.", t: "Under most Indian Rent Control Acts, deposits must be refunded minus legitimate deductions." },
+    { p: /(security|advance)\s+deposit.{0,80}([3-9]|[1-9]\d+)\s*(month|months)/i, not: [/two\s+months?|1\s+month|one\s+month/i], lv: "medium", r: "This security deposit is 3 or more months' rent. Most states cap deposits at 2 months.", t: "Check your state's Rent Control Act for the maximum permissible deposit." },
+    { p: /(deposit|advance).{0,60}(forfeit|forfeited|be\s+liable\s+to\s+forfeiture|stand\s+forfeited)/i, not: [], lv: "high", r: "The entire deposit can be forfeited, even for minor breaches.", t: "Forfeiture should be proportional to actual damage or loss." },
+    { p: /lock.{0,5}in.{0,60}(1[2-9]|2\d|3\d)\s*(month|months)/i, not: [], lv: "high", r: "A lock-in over 11 months requires mandatory registration under the Registration Act 1908.", t: "Make sure it is registered at the Sub-Registrar's office, or reduce the lock-in." },
+    { p: /lock.{0,5}in.{0,120}(penalty|damages|liable|pay|deduct|forfeit)/i, not: [], lv: "high", r: "Leaving before the lock-in ends may cost you a significant financial penalty.", t: "Get the exact penalty amount in writing." },
+    { p: /(penalty|damages|compensation).{0,60}(unlimited|without\s+limit|any\s+and\s+all\s+losses|all\s+losses)/i, not: [], lv: "high", r: "This clause creates unlimited financial liability for you.", t: "Negotiate a liability cap, such as the contract value or a fixed amount." },
+    { p: /(double|twice|triple|two\s+times?|2x).{0,60}(rent|penalty|amount|deposit)/i, not: [], lv: "high", r: "The penalty is a multiple of the rent or amount, which may exceed what Indian courts enforce.", t: "Under Section 74 of the Indian Contract Act, a penalty must reasonably estimate actual loss." },
+    { p: /indemnif(y|ication|ied).{0,120}(unlimited|without\s+limit|any\s+and\s+all|whatsoever|howsoever)/i, not: [], lv: "high", r: "You agree to cover the other party for any and all losses, with no upper limit.", t: "Add a liability cap and exclude gross negligence or intentional misconduct." },
+    { p: /waive[sd]?.{0,80}(legal\s+action|court|proceedings|sue|claim|dispute|remedy|statutory)/i, not: [/consumer\s+court|civil\s+court|legal\s+forum|any\s+court|any\s+forum|tribunal/i], lv: "high", r: "You are being asked to give up your legal rights to take action.", t: "Many statutory rights cannot be waived under Indian law. Have a lawyer review this." },
+    { p: /automatic(ally)?\s+renew(ed|al)?.{0,120}(unless.{0,60}notice|without\s+further\s+action|deemed\s+to\s+be\s+renewed)/i, not: [], lv: "high", r: "The contract renews automatically, so you may be locked in for another term without realising it.", t: "Note the deadline for a non-renewal notice and set a reminder." },
+    { p: /(landlord|owner|lessor|employer).{0,60}(enter|access|inspect).{0,60}(any\s+time|at\s+all\s+times|without\s+(prior\s+)?notice|at\s+(his|her|its)\s+(sole\s+)?discretion)/i, not: [/emergency|fire|flood|urgent\s+repair/i], lv: "high", r: "The other party can enter your home at any time without prior notice.", t: "Negotiate for at least 24 hours' notice except in genuine emergencies." },
+    { p: /(sole|absolute|unfettered|complete)\s+(discretion|authority|decision)/i, not: [/mutual\s+(consent|agreement)/i], lv: "medium", r: "The other party has unchecked decision-making power with no obligation to be fair.", t: "Add 'acting reasonably' or 'with written notice' to limit this power." }
+  ];
+  var SUBS = [
+    [/\bhereinafter\s+referred\s+to\s+as\b/gi, "from now on called"], [/\bhereinafter\b/gi, "from now on"], [/\bherein\b/gi, "in this document"],
+    [/\bhereby\b/gi, "by this agreement"], [/\bhereunder\b/gi, "under this agreement"], [/\bthereof\b/gi, "of it"], [/\bthereafter\b/gi, "after that"],
+    [/\bwhereas\b/gi, "given that"], [/\bnotwithstanding\b/gi, "despite"], [/\bin\s+lieu\s+of\b/gi, "instead of"],
+    [/\btime\s+is\s+of\s+the\s+essence\b/gi, "all deadlines are strict"], [/\bsubject\s+to\b/gi, "provided that"],
+    [/\bin\s+the\s+event\s+of\b/gi, "if there is"], [/\bin\s+the\s+event\s+that\b/gi, "if"],
+    [/\bat\s+(his|her|its|their)\s+sole\s+discretion\b/gi, "entirely at their own judgment, with no obligation to be fair"],
+    [/\bforthwith\b/gi, "immediately"], [/\bfrom\s+time\s+to\s+time\b/gi, "whenever needed"], [/\bin\s+perpetuity\b/gi, "forever"],
+    [/\bforce\s+majeure\b/gi, "uncontrollable events such as natural disasters or strikes"], [/\bbona\s+fide\b/gi, "genuine"],
+    [/\binter\s+alia\b/gi, "among other things"], [/\bmutatis\s+mutandis\b/gi, "with the necessary changes"],
+    [/\bstamp\s+duty\b/gi, "government tax on this document"], [/\bencumbrance\b/gi, "existing debt or legal claim on this property"],
+    [/\bindemnif(y|ied|ication)\b/gi, "financially protect"], [/\bliquidated\s+damages\b/gi, "a fixed penalty amount agreed in advance"],
+    [/\bdemised\s+premises\b/gi, "rented property"], [/\blessor\b/gi, "landlord"], [/\blessee\b/gi, "tenant"],
+    [/\bquiet\s+enjoyment\b/gi, "the right to use the property without disturbance"], [/\bvacant\s+possession\b/gi, "the property handed over empty"],
+    [/\bpremises\b/gi, "property"], [/\bexecute[sd]?\b/gi, "sign"], [/\bpro\s+rata\b/gi, "in proportion"]
+  ];
+  var SAMPLES = [
+    "The Lessor may terminate this agreement forthwith at his sole discretion, and the Lessee shall vacate the demised premises immediately thereafter.",
+    "The Lessee shall pay a security deposit equal to 6 months' rent, which is non-refundable and shall stand forfeited in the event of any breach hereunder.",
+    "The Lessee hereby agrees to a lock-in period of 12 months, failing which the Lessee shall pay liquidated damages. The Lessor may enter the premises at any time without notice.",
+    "Either party may terminate this agreement by giving the other 30 days' written notice. The security deposit shall be refunded within 15 days of vacant possession, subject to deduction for unpaid dues."
+  ];
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function analyse() {
+    var text = $("#adhIn").value, toks = [], s = text.replace(/[\u0001\u0002]/g, "");
+    SUBS.forEach(function (sub) { s = s.replace(sub[0], function () { toks.push(sub[1]); return "\u0001" + (toks.length - 1) + "\u0002"; }); });
+    s = esc(s).replace(/\u0001(\d+)\u0002/g, function (_, i) { return "<mark>" + esc(toks[+i]) + "</mark>"; });
+    $("#adhPlain").innerHTML = text.trim() ? s : '<span style="color:var(--muted)">Type or paste a clause on the left.</span>';
+    var hits = RULES.filter(function (r) { return r.p.test(text) && !r.not.some(function (n) { return n.test(text); }); });
+    hits.sort(function (a, b) { return (a.lv === "high" ? 0 : 1) - (b.lv === "high" ? 0 : 1); });
+    $("#adhRiskH").textContent = hits.length ? "RISKS FOUND · " + hits.length : "RISKS FOUND";
+    $("#adhRisks").innerHTML = hits.length
+      ? hits.map(function (h) { return '<div class="risk ' + h.lv + '"><b>' + (h.lv === "high" ? "High" : "Medium") + ": " + esc(h.r) + "</b><em>Tip: " + esc(h.t) + "</em></div>"; }).join("")
+      : (text.trim() ? '<p class="safe">✓ No risky patterns found in this clause.</p>' : "");
+  }
+  var chips = $$("#adhChips .chip");
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () {
+      chips.forEach(function (x) { x.setAttribute("aria-pressed", String(x === c)); });
+      $("#adhIn").value = SAMPLES[+c.dataset.i]; analyse();
+    });
+  });
+  $("#adhIn").addEventListener("input", function () { chips.forEach(function (x) { x.setAttribute("aria-pressed", "false"); }); analyse(); });
+  $("#adhIn").value = SAMPLES[0]; analyse();
+
+  /* =========================================================
+     3. JalSetu Lite — order lifecycle with the real checks
+     ========================================================= */
+  var RATES = { 4000: 660, 5000: 700, 6000: 740, 12000: 1290 };
+  var STATES = ["SEARCHING", "OFFERED", "CONFIRMED", "DISPATCHED", "ARRIVED", "DELIVERED"];
+  var LABELS = ["Search tankers →", "Confirm order →", "Dispatch tanker →", "Tanker arrived →", "Verify delivery ✓"];
+  var jal;
+  function jlog(cls, msg) { var p = document.createElement("p"); p.className = cls; p.textContent = msg; var l = $("#jalLog"); l.appendChild(p); l.scrollTop = l.scrollHeight; }
+  function rail() {
+    $("#jalRail").innerHTML = STATES.map(function (s, i) {
+      var c = i < jal.step || (i === 5 && jal.step === 5) ? "done" : (i === jal.step && !jal.disputed ? "now" : "");
+      return '<span class="' + c + '">' + s + "</span>";
+    }).join("") + (jal.disputed ? '<span class="disputed">DISPUTED</span>' : "");
+    var go = $("#jalGo");
+    go.disabled = jal.disputed || jal.step >= 5;
+    go.textContent = jal.disputed ? "Order locked" : jal.step >= 5 ? "Delivered ✓" : LABELS[jal.step];
+  }
+  function jalReset() {
+    jal = { step: 0, otp: String(1000 + Math.floor(Math.random() * 9000)), bad: 0, disputed: false };
+    $("#jalLog").innerHTML = ""; $("#jalOtp").value = ""; $("#jalOtpHint").textContent = "";
+    jlog("m", "> New order. Pick a tanker size and a private quote, then search.");
+    rail();
+  }
+  $("#jalGo").addEventListener("click", function () {
+    if (jal.disputed || jal.step >= 5) return;
+    var cap = +$("#jalCap").value, quote = +$("#jalQuote").value, bench = RATES[cap];
+    if (jal.step === 0) {
+      jal.step = 1;
+      jlog("", "> Offer from a private operator: ₹" + quote.toLocaleString("en-IN") + " for " + cap.toLocaleString("en-IN") + " L");
+      if (quote > bench) jlog("r", "  ⚠ PRICE WARNING: ₹" + (quote - bench).toLocaleString("en-IN") + " above the BWSSB benchmark of ₹" + bench.toLocaleString("en-IN") + ".");
+      else jlog("g", "  ✓ At or below the BWSSB benchmark of ₹" + bench.toLocaleString("en-IN") + ".");
+    } else if (jal.step === 1) {
+      jal.step = 2; jlog("", "> Order confirmed. Delivery OTP generated server-side (HMAC).");
+      $("#jalOtpHint").textContent = "(demo: " + jal.otp + ")";
+    } else if (jal.step === 2) {
+      jal.step = 3; jlog("", "> Tanker dispatched. Cancellation is now locked.");
+    } else if (jal.step === 3) {
+      jal.step = 4; jlog("", "> Tanker arrived. Enter the meter readings and the OTP to verify.");
+    } else if (jal.step === 4) {
+      var got = +$("#jalM1").value - +$("#jalM0").value, need = Math.ceil(0.95 * cap);
+      if ($("#jalOtp").value.trim() !== jal.otp) {
+        jal.bad++;
+        jlog("y", "  ✗ Wrong OTP (" + jal.bad + "/3).");
+        if (jal.bad >= 3) { jal.disputed = true; jlog("r", "  ⛔ 3 wrong OTPs. Order locked as DISPUTED."); }
+      } else if (got < need) {
+        jal.disputed = true;
+        jlog("r", "  ⛔ Meter shows " + got.toLocaleString("en-IN") + " L, below 95% of capacity (" + need.toLocaleString("en-IN") + " L). Order locked as DISPUTED.");
+      } else {
+        jal.step = 5;
+        jlog("g", "  ✓ OTP correct and " + got.toLocaleString("en-IN") + " L delivered (≥ " + need.toLocaleString("en-IN") + " L). DELIVERED.");
+      }
+    }
+    rail();
+  });
+  $("#jalReset").addEventListener("click", jalReset);
+  jalReset();
+})();
 </script>
 </body>
 </html>
