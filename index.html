@@ -1,22 +1,337 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sudeep Nayak | ML engineer in training</title>
-<meta name="description" content="Sudeep Nayak, AIML engineering student building ML systems with monitoring and retraining.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"></head><body>
-<header class="site"><div class="wrap"><a class="brand" href="index.html">Sudeep Nayak</a><nav aria-label="Main"><a href="index.html" aria-current="page">Home</a><a href="projects.html">Projects</a><a href="experience.html">Experience</a><a href="contact.html">Contact</a></nav></div></header>
-<main>
-<section class="hero"><div class="wrap">
-<h1>I build ML systems that notice when they stop working.</h1>
-<p class="lead">I am a third-year AIML engineering student at MITE, Moodbidri, looking for ML and AI engineer roles. My main project watches a loan-default model, detects drift, retrains it, and only promotes the new version if it is better.</p>
-<div class="btns"><a class="btn primary" href="https://mlops-observatory-sudeepunayak.streamlit.app/">Open the live dashboard</a><a class="btn" href="projects.html">See all projects</a></div>
-<div class="hm" role="img" aria-label="Heatmap of data drift per feature over 10 batches. Age, income, employment years and loan amount turn red as drift grows; credit score and debt ratio stay green.">
-<div class="hm-grid" id="hm-grid"></div>
-<p class="hm-cap">Real output from my project: drift (PSI) per feature across 10 incoming batches. Green is stable, amber is worth watching, red means retrain.</p>
-</div></div></section>
-<section><div class="wrap"><h2>What I work with</h2>
-<p>Python, pandas, scikit-learn, scipy, Streamlit, plotly, Git and GitHub. I write the statistics myself, such as PSI and the KS test for drift, so I can explain every number on the screen.</p>
-<p><a href="experience.html">Education, skills and workshop</a></p></div></section></main>
-<footer class="site"><div class="wrap"><p>Sudeep Nayak, AIML engineering, MITE Moodbidri. Source on <a href="https://github.com/Sudeepn1104">GitHub</a>.</p></div></footer>
-<script src="script.js"></script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sudeep Nayak — AI/ML Engineer</title>
+<meta name="description" content="Portfolio of Sudeep Nayak, an AI/ML undergraduate building NLP, MLOps and public-infrastructure projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --text: #16181d;
+    --muted: #5b616e;
+    --line: #e4e4de;
+    --accent: #2f5bea;
+    --accent-soft: #e8eefe;
+    --tag: #f0f0ea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1014;
+      --surface: #161920;
+      --text: #e8e9ec;
+      --muted: #9aa0ad;
+      --line: #262a33;
+      --accent: #7c9cff;
+      --accent-soft: #1b2340;
+      --tag: #1d2028;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e1014;
+    --surface: #161920;
+    --text: #e8e9ec;
+    --muted: #9aa0ad;
+    --line: #262a33;
+    --accent: #7c9cff;
+    --accent-soft: #1b2340;
+    --tag: #1d2028;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* nav */
+  header.nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  header.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { font-weight: 600; text-decoration: none; letter-spacing: -0.01em; }
+  .brand span { color: var(--accent); }
+  nav { display: flex; gap: 22px; align-items: center; }
+  nav a { text-decoration: none; color: var(--muted); font-size: 14px; }
+  nav a:hover { color: var(--text); }
+  .theme-btn {
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 15px;
+  }
+
+  /* hero */
+  .hero { padding: 96px 0 72px; }
+  .eyebrow { font-size: 13px; color: var(--accent); letter-spacing: 0.04em; margin: 0 0 18px; }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 60px); line-height: 1.08; letter-spacing: -0.03em;
+    margin: 0 0 22px; font-weight: 700; max-width: 14ch;
+  }
+  .hero p.lead { font-size: 19px; color: var(--muted); max-width: 58ch; margin: 0 0 34px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 10px; font-weight: 500; font-size: 15px;
+    text-decoration: none; border: 1px solid var(--line); background: var(--surface);
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .btn.primary { color: #0e1014; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #0e1014; } }
+  .btn:hover { transform: translateY(-1px); }
+
+  /* sections */
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 32px; }
+  .sec-head .num { color: var(--accent); font-size: 13px; }
+  .sec-head h2 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
+
+  .about { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; }
+  .about p { margin: 0 0 16px; color: var(--muted); }
+  .about p strong { color: var(--text); font-weight: 600; }
+  .facts { list-style: none; padding: 0; margin: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+  .facts li { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .facts li:last-child { border-bottom: 0; }
+  .facts li span:first-child { color: var(--muted); }
+  .facts li span:last-child { text-align: right; }
+
+  /* projects */
+  .projects { display: grid; gap: 22px; }
+  .proj {
+    display: grid; grid-template-columns: 1fr 1.15fr; gap: 36px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 32px;
+    transition: border-color .15s;
+  }
+  .proj:hover { border-color: var(--accent); }
+  .idx { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .kind { font-size: 12px; color: var(--accent); margin-bottom: 10px; }
+  .proj h3 { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.02em; }
+  .proj .sum { margin: 0 0 20px; color: var(--muted); font-size: 15px; }
+  .stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+  .stat { background: var(--accent-soft); border-radius: 10px; padding: 10px 14px; min-width: 120px; }
+  .stat b { display: block; font-size: 18px; letter-spacing: -0.01em; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  .links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn.sm { padding: 8px 14px; font-size: 14px; }
+  .hl { margin: 0 0 22px; padding: 0; list-style: none; }
+  .hl li { position: relative; padding: 0 0 12px 22px; font-size: 15px; color: var(--muted); }
+  .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+  .hl b { color: var(--text); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--tag); color: var(--muted); }
+
+  /* skills */
+  .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .skill-col h4 { margin: 0 0 12px; font-size: 13px; color: var(--muted); font-weight: 500; }
+  .skill-col ul { list-style: none; padding: 0; margin: 0; }
+  .skill-col li { padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 15px; }
+
+  /* contact */
+  .contact { text-align: center; padding: 88px 0; }
+  .contact h2 { font-size: clamp(28px, 4.5vw, 42px); letter-spacing: -0.02em; margin: 0 0 14px; }
+  .contact p { color: var(--muted); margin: 0 auto 30px; max-width: 48ch; }
+  .contact .cta { justify-content: center; }
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; font-size: 13px; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    nav a.hide-sm { display: none; }
+    .hero { padding: 64px 0 52px; }
+    .about { grid-template-columns: 1fr; gap: 24px; }
+    .proj { grid-template-columns: 1fr; gap: 8px; padding: 22px; }
+    .skills { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">sudeep<span>.</span>nayak</a>
+    <nav>
+      <a class="hide-sm" href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a class="hide-sm" href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-btn" id="theme" aria-label="Toggle dark mode">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <p class="eyebrow mono">// AI · ML · MLOps</p>
+      <h1>Hi, I'm Sudeep. I build machine learning that ships.</h1>
+      <p class="lead">A third-year AI/ML engineering student at MITE, Moodbidri, turning models into useful tools — from simplifying Indian legal documents with NLP to monitoring production models for data drift.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">View projects →</a>
+        <a class="btn" href="https://github.com/Sudeepn1104" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://huggingface.co/Sudeepn1104" target="_blank" rel="noopener">Hugging Face</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head"><span class="num mono">01</span><h2>About</h2></div>
+      <div class="about">
+        <div>
+          <p>I'm an <strong>AIML enthusiast</strong> who learns best by building. I enjoy taking an idea from a notebook all the way to something people can actually use — a dashboard, an API, or a deployed model.</p>
+          <p>Lately I've been focused on <strong>NLP for Indian legal text</strong> and on <strong>MLOps</strong>: how to know when a model in production has gone stale, and how to retrain it before anyone notices.</p>
+          <p>I also like problems at the intersection of technology and public good, such as open, interoperable infrastructure for everyday services.</p>
+        </div>
+        <ul class="facts">
+          <li><span>Focus</span><span>NLP · MLOps</span></li>
+          <li><span>Studying</span><span>B.E. in AI &amp; ML, 5th sem</span></li>
+          <li><span>College</span><span>MITE, Moodbidri</span></li>
+          <li><span>Based in</span><span>Udupi, Karnataka</span></li>
+          <li><span>Open to</span><span>ML / AI roles &amp; internships</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head"><span class="num mono">02</span><h2>Selected projects</h2></div>
+
+      <div class="projects">
+        <article class="proj">
+          <div class="proj-side">
+            <div class="idx mono">P/01</div>
+            <div class="kind mono">MLOps · Model monitoring</div>
+            <h3>MLOps Observatory</h3>
+            <p class="sum">A health monitor for a credit-default model trained on 30,000 real credit card clients. It spots data drift and performance drops, retrains the model, and promotes v2 only if it beats v1.</p>
+            <div class="stat-row">
+              <div class="stat"><b>0.81 → 0.43</b><span>AUC under concept drift, caught</span></div>
+              <div class="stat"><b>63</b><span>automated tests</span></div>
+            </div>
+            <div class="links">
+              <a class="btn primary sm" href="https://mlops-observatory-sudeepunayak.streamlit.app/" target="_blank" rel="noopener">Live demo ↗</a>
+              <a class="btn sm" href="https://github.com/Sudeepn1104/MLOPs-Observatory" target="_blank" rel="noopener">Code</a>
+            </div>
+          </div>
+          <div class="proj-main">
+            <ul class="hl">
+              <li>Drift tests (<b>PSI</b> and <b>Kolmogorov–Smirnov</b>) implemented from scratch, shown as a per-feature, per-batch heatmap.</li>
+              <li>Retrain rule fires when max PSI &gt; 0.2 or AUC drops by more than 0.05; a model registry compares v1 and v2 on the same holdout.</li>
+              <li>Live drift injector to break the model on purpose. It shows the “silent failure” where PSI stays green while AUC collapses.</li>
+              <li>FastAPI scoring service in a hardened Docker image, with GitHub Actions CI and one-click Render deploy.</li>
+            </ul>
+            <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-side">
+            <div class="idx mono">P/02</div>
+            <div class="kind mono">NLP · LegalTech</div>
+            <h3>AdharaAI</h3>
+            <p class="sum">Upload a rental agreement, court notice or employment contract. AdharaAI flags risky clauses, explains every line in plain English and gives you an action checklist, built for Indian law.</p>
+            <div class="stat-row">
+              <div class="stat"><b>30+</b><span>risk rules for Indian law</span></div>
+              <div class="stat"><b>80+</b><span>plain-English rewrites</span></div>
+            </div>
+            <div class="links">
+              <a class="btn primary sm" href="https://github.com/Sudeepn1104/AdharaAI" target="_blank" rel="noopener">Code ↗</a>
+            </div>
+          </div>
+          <div class="proj-main">
+            <ul class="hl">
+              <li>Reads PDFs, scanned images (Tesseract OCR) and plain text, then splits clauses with a 4-strategy segmenter for numbered, lettered, WHEREAS and paragraph styles.</li>
+              <li>Clause classifier fine-tuned from <b>InLegalBERT</b> and exported to <b>ONNX</b>, so production runs without PyTorch.</li>
+              <li>Privacy-first: no external APIs, and raw document text is deleted within 5 minutes.</li>
+              <li>Hardened FastAPI backend with rate limiting, magic-byte file validation and security headers. CI runs data-quality checks, tests and a Docker build.</li>
+            </ul>
+            <div class="tags"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">InLegalBERT</span><span class="tag">ONNX Runtime</span><span class="tag">FastAPI</span><span class="tag">Tesseract</span><span class="tag">Docker</span></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-side">
+            <div class="idx mono">P/03</div>
+            <div class="kind mono">Civic tech · Hackathon</div>
+            <h3>JalSetu Lite</h3>
+            <p class="sum">An open, Beckn-inspired digital public infrastructure network linking citizens, the municipal water board (BWSSB) and private tanker operators in one transparent marketplace.</p>
+            <div class="stat-row">
+              <div class="stat"><b>Build for Billions</b><span>hackathon · NITK Surathkal</span></div>
+            </div>
+            <div class="links">
+              <a class="btn primary sm" href="https://github.com/Sudeepn1104/jalsetu-lite" target="_blank" rel="noopener">Code ↗</a>
+            </div>
+          </div>
+          <div class="proj-main">
+            <ul class="hl">
+              <li>Price benchmarking: private quotes above official BWSSB rates get a red warning tag.</li>
+              <li>Delivery proof via server-side HMAC OTP plus a 95% meter-volume check. Three bad OTPs or a short delivery lock the order as disputed.</li>
+              <li>Full order lifecycle with race-safe cancellation, and a fixed-amount UPI payment QR per operator.</li>
+              <li>Separate citizen, driver and operator dashboards on a FastAPI + SQLite backend, with backend and frontend test suites in CI.</li>
+            </ul>
+            <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">JavaScript</span><span class="tag">Next.js</span><span class="tag">Docker</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head"><span class="num mono">03</span><h2>Toolkit</h2></div>
+      <div class="skills">
+        <div class="skill-col"><h4 class="mono">Languages</h4><ul><li>Python</li><li>JavaScript</li><li>Java</li><li>HTML / CSS</li></ul></div>
+        <div class="skill-col"><h4 class="mono">ML &amp; NLP</h4><ul><li>scikit-learn</li><li>PyTorch &amp; Transformers</li><li>ONNX Runtime</li><li>pandas / NumPy</li></ul></div>
+        <div class="skill-col"><h4 class="mono">MLOps</h4><ul><li>Drift detection (PSI, KS)</li><li>Model registry &amp; retraining</li><li>Docker &amp; Render</li><li>GitHub Actions CI</li></ul></div>
+        <div class="skill-col"><h4 class="mono">Apps &amp; APIs</h4><ul><li>FastAPI</li><li>Streamlit</li><li>SQLite</li><li>Tesseract OCR</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Let's build something.</h2>
+      <p>I'm open to ML and AI engineer roles, internships and project collaborations. The fastest way to reach me is email.</p>
+      <div class="cta">
+        <a class="btn primary" href="mailto:sudeepnayak1104@gmail.com">Email me</a>
+        <a class="btn" href="https://github.com/Sudeepn1104" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://huggingface.co/Sudeepn1104" target="_blank" rel="noopener">Hugging Face</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Sudeep Nayak</span>
+    <span class="mono">built with plain HTML &amp; CSS</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('theme');
+    try { var saved = localStorage.getItem('theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+    btn.addEventListener('click', function () {
+      var dark = root.dataset.theme ? root.dataset.theme === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    });
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  })();
+</script>
+</body>
+</html>
