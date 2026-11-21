@@ -387,13 +387,15 @@
             <div class="idx mono">P/01</div>
             <div class="kind mono">MLOps · Model monitoring</div>
             <h3>MLOps Observatory</h3>
-            <p class="sum">A health monitor for a credit-default model trained on 30,000 real credit card clients. It spots data drift and performance drops, retrains the model, and promotes v2 only if it beats v1.</p>
+            <p class="sum">A health monitor for a credit-default model trained on 30,000 real credit card clients. It spots data drift and performance drops, retrains the model, and tries the new version in shadow on live traffic before promoting it.</p>
             <div class="stat-row">
               <div class="stat"><b>0.81 → 0.43</b><span>AUC collapse it caught</span></div>
-              <div class="stat"><b>63</b><span>tests passing</span></div>
+              <div class="stat"><b>127</b><span>tests passing</span></div>
+              <div class="stat"><b>76 req/s</b><span>API throughput, 12 ms median</span></div>
             </div>
             <div class="links">
               <a class="btn primary sm" href="https://mlops-observatory-sudeepunayak.streamlit.app/" target="_blank" rel="noopener">Full live app ↗</a>
+              <a class="btn sm" href="https://mlops-observatory-api.onrender.com/docs" target="_blank" rel="noopener">Live API ↗</a>
               <a class="btn sm" href="https://github.com/Sudeepn1104/MLOPs-Observatory" target="_blank" rel="noopener">Code</a>
             </div>
           </div>
@@ -402,9 +404,11 @@
               <li>Drift tests (<b>PSI</b> and <b>Kolmogorov–Smirnov</b>) implemented from scratch, shown as a per-feature, per-batch heatmap.</li>
               <li>Retrain rule fires when max PSI &gt; 0.2 or AUC drops by more than 0.05. A model registry compares v1 and v2 on the same holdout.</li>
               <li>Catches the “silent failure”: when only the rules change, PSI stays green while AUC collapses.</li>
-              <li>FastAPI scoring service in a hardened Docker image, with GitHub Actions CI and one-click Render deploy.</li>
+              <li><b>Shadow deployment</b>: a retrained model scores live traffic next to production before it's promoted. It caught a model that won offline (AUC 0.69 vs 0.58) but would have flagged 60% of clients instead of 35%.</li>
+              <li><b>MLflow</b> registry, <b>Evidently</b>-matched drift tests, and <b>Prometheus + Grafana</b> with 8 unit-tested alerts and a runbook.</li>
+              <li>FastAPI service live on Render; a scanned, versioned Docker image with an SBOM and signed provenance, shipped through GitHub Actions CI.</li>
             </ul>
-            <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span></div>
+            <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">FastAPI</span><span class="tag">MLflow</span><span class="tag">Evidently</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span></div>
           </div>
         </div>
         <div class="demo" data-demo="obs">
@@ -570,7 +574,7 @@
       <div class="skills">
         <div class="sk reveal"><h4>// languages</h4><ul><li>Python</li><li>JavaScript</li><li>TypeScript</li><li>Java</li><li>HTML / CSS</li></ul></div>
         <div class="sk reveal"><h4>// ml &amp; nlp</h4><ul><li>scikit-learn</li><li>PyTorch</li><li>Transformers</li><li>InLegalBERT</li><li>ONNX Runtime</li><li>pandas</li><li>SciPy</li></ul></div>
-        <div class="sk reveal"><h4>// mlops</h4><ul><li>Drift detection (PSI, KS)</li><li>Model registry</li><li>Retraining</li><li>Docker</li><li>GitHub Actions</li><li>Render</li><li>pytest</li></ul></div>
+        <div class="sk reveal"><h4>// mlops</h4><ul><li>Drift detection (PSI, KS, Evidently)</li><li>MLflow registry</li><li>Retraining</li><li>Shadow deployment</li><li>Prometheus</li><li>Grafana</li><li>Docker</li><li>GitHub Actions</li><li>Render</li><li>pytest</li></ul></div>
         <div class="sk reveal"><h4>// apps &amp; apis</h4><ul><li>FastAPI</li><li>Streamlit</li><li>Plotly</li><li>SQLite</li><li>Next.js</li><li>Tesseract OCR</li></ul></div>
       </div>
     </div>
