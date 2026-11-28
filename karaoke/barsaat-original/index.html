@@ -50,15 +50,18 @@
   <div class="bar"><div id="prog"></div></div>
 
   <section class="card" id="lyrBox" style="margin-top:0">
-    <div class="lyr"><div id="lp"></div><div id="lc"></div><div id="ln"></div></div>
+    <div class="lyr" id="lyrTextView"><div id="lp"></div><div id="lc"></div><div id="ln"></div></div>
+    <img id="lyrImg" class="hidden" alt="Lyrics" style="width:100%;border-radius:10px;display:block">
+    <input type="file" id="lyrFile" accept="image/*" class="hidden">
     <div class="row" style="margin-top:8px">
-      <button id="lprev">◀ Line</button><button id="lnext">Line ▶</button><button id="ledit">Edit lyrics</button>
+      <button id="lprev">◀ Line</button><button id="lnext">Line ▶</button><button id="ledit">Edit lyrics</button></div>
+    <div class="row" style="margin-top:8px"><button id="limg">🖼 Add lyrics screenshot</button><button id="limgdel" class="hidden">Remove screenshot</button>
     </div>
     <div id="lyrEdit" class="hidden">
       <textarea id="lyrText" rows="8" placeholder="Paste the lyrics here, one line per row"></textarea>
       <button class="primary" id="lsave" style="width:100%">Save lyrics</button>
     </div>
-    <p class="msg" style="font-size:12px">Lyrics show only here. They are not added to your final video.</p>
+    <p class="msg" style="font-size:12px">Lyrics show only here and stay on this phone. They are not added to your final video.</p>
   </section>
 
   <!-- Step 1 -->
@@ -324,6 +327,29 @@ $('mkvid').onclick = async () => {
   $('mkvid').disabled = $('mkwav').disabled = $('play').disabled = $('retake').disabled = false;
 };
 
+// ---- lyrics screenshot (stays on this phone only) ----
+const IKEY = 'barsaat-lyrics-img';
+function showImg(d){
+  const has = !!d;
+  $('lyrImg').classList.toggle('hidden', !has); if (has) $('lyrImg').src = d;
+  $('lyrTextView').classList.toggle('hidden', has);
+  ['lprev','lnext'].forEach(id => $(id).classList.toggle('hidden', has));
+  $('limgdel').classList.toggle('hidden', !has);
+}
+$('limg').onclick = () => $('lyrFile').click();
+$('lyrFile').onchange = () => {
+  const f = $('lyrFile').files[0]; if (!f) return;
+  const im = new Image(), url = URL.createObjectURL(f);
+  im.onload = () => {
+    const w = Math.min(1000, im.width), h = Math.round(im.height * w / im.width);
+    const c = document.createElement('canvas'); c.width = w; c.height = h; c.getContext('2d').drawImage(im, 0, 0, w, h);
+    const d = c.toDataURL('image/jpeg', 0.85);
+    try { localStorage.setItem(IKEY, d); } catch(e){}
+    showImg(d); URL.revokeObjectURL(url);
+  };
+  im.src = url;
+};
+$('limgdel').onclick = () => { try { localStorage.removeItem(IKEY); } catch(e){} showImg(null); };
 // ---- lyrics guide (on page only) ----
 const PHRASES = [[0.45,3.35],[3.85,5.4],[5.65,6.95],[7.35,8.45],[8.8,10.5],[10.9,17.5],[17.85,21.05],[21.6,23.05],[23.35,24.7],[25.05,27.2]];
 const LKEY = 'barsaat-lyrics';
@@ -353,8 +379,8 @@ $('lsave').onclick = () => {
   const t = $('lyrText').value; try { localStorage.setItem(LKEY, t); } catch(e){}
   setLines(t); $('lyrEdit').classList.add('hidden');
 };
-(function(){ let t = ''; try { t = localStorage.getItem(LKEY) || ''; } catch(e){}
-  $('lyrText').value = t; setLines(t); if (!LINES.length) $('lyrEdit').classList.remove('hidden'); })();
+(function(){ let t = '', d = null; try { t = localStorage.getItem(LKEY) || ''; d = localStorage.getItem(IKEY); } catch(e){}
+  $('lyrText').value = t; setLines(t); showImg(d); if (!LINES.length && !d) $('lyrEdit').classList.remove('hidden'); })();
 </script>
 </body>
 </html>
