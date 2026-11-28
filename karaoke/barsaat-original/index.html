@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barsaat (Original) Karaoke</title>
+<style>
+  :root { --bg:#1e1712; --card:#2b2119; --ink:#f4e9d8; --muted:#bfae95; --accent:#e3a557; --rec:#e25a4a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:460px; margin:0 auto; padding:16px 14px 40px; }
+  h1 { font-size:22px; margin:4px 0 2px; }
+  .sub { color:var(--muted); font-size:14px; margin:0 0 12px; }
+  .stage { position:relative; border-radius:14px; overflow:hidden; background:#000; aspect-ratio:9/16; max-height:42vh; margin:0 auto; }
+  video { width:100%; height:100%; object-fit:contain; display:block; }
+  .overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:96px; font-weight:700; color:#fff; text-shadow:0 2px 12px #000; pointer-events:none; }
+  .badge { position:absolute; top:10px; left:10px; background:var(--rec); color:#fff; font-size:13px; font-weight:600; padding:4px 10px; border-radius:20px; display:none; }
+  .bar { height:4px; background:#3a2e24; border-radius:4px; margin:10px 0 14px; overflow:hidden; }
+  .bar > div { height:100%; width:0; background:var(--accent); }
+  .card { background:var(--card); border-radius:14px; padding:14px; margin-top:12px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; }
+  button { flex:1; min-width:130px; border:0; border-radius:12px; padding:14px 12px; font-size:16px; font-weight:600; background:#44372b; color:var(--ink); cursor:pointer; }
+  button.primary { background:var(--accent); color:#2a1c0e; }
+  button.rec { background:var(--rec); color:#fff; }
+  button:disabled { opacity:.45; }
+  label { display:block; font-size:14px; color:var(--muted); margin:12px 0 4px; }
+  input[type=range] { width:100%; accent-color:var(--accent); }
+  .val { float:right; color:var(--ink); }
+  .msg { font-size:14px; color:var(--muted); margin:10px 0 0; min-height:1.2em; }
+  .err { color:#ff9a8a; }
+  a.dl { display:block; text-align:center; margin-top:10px; padding:12px; border-radius:12px; background:#3d5a3a; color:#fff; text-decoration:none; font-weight:600; }
+  .hidden { display:none !important; }
+  .lyr { text-align:center; }
+  #lc { font-size:22px; font-weight:700; color:#fff; min-height:1.4em; margin:4px 0; }
+  #lp, #ln { font-size:15px; color:var(--muted); min-height:1.2em; }
+  textarea { width:100%; background:#1e1712; color:var(--ink); border:1px solid #44372b; border-radius:10px; padding:10px; font-size:15px; margin:10px 0 8px; }
+  ol { padding-left:20px; margin:6px 0 0; color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Barsaat (Original) — Karaoke</h1>
+  <p class="sub">sing with a soft guide voice, keep only yours</p>
+
+  <div class="stage">
+    <video id="vid" src="lyrics.mp4" muted playsinline preload="auto"></video>
+    <div class="overlay" id="count"></div>
+    <div class="badge" id="badge">● REC</div>
+  </div>
+  <div class="bar"><div id="prog"></div></div>
+
+  <section class="card" id="lyrBox" style="margin-top:0">
+    <div class="lyr"><div id="lp"></div><div id="lc"></div><div id="ln"></div></div>
+    <div class="row" style="margin-top:8px">
+      <button id="lprev">◀ Line</button><button id="lnext">Line ▶</button><button id="ledit">Edit lyrics</button>
+    </div>
+    <div id="lyrEdit" class="hidden">
+      <textarea id="lyrText" rows="8" placeholder="Paste the lyrics here, one line per row"></textarea>
+      <button class="primary" id="lsave" style="width:100%">Save lyrics</button>
+    </div>
+    <p class="msg" style="font-size:12px">Lyrics show only here. They are not added to your final video.</p>
+  </section>
+
+  <!-- Step 1 -->
+  <section class="card" id="s1">
+    <ol>
+      <li>Plug in <b>wired earphones</b> (Bluetooth adds delay).</li>
+      <li>Tap Start and allow the microphone.</li>
+      <li>Sing along — the original voice plays softly as a guide.</li>
+    </ol>
+    <div class="row" style="margin-top:12px"><button class="primary" id="start">Start</button></div>
+    <p class="msg" id="m1"></p>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="card hidden" id="s2">
+    <label>Guide voice volume <span class="val" id="gvV">100%</span></label>
+    <input type="range" id="gv" min="0" max="150" value="100">
+    <div class="row" style="margin-top:12px">
+      <button class="rec" id="rec">● Record</button>
+      <button id="stop" disabled>■ Stop</button>
+    </div>
+    <p class="msg" id="m2"></p>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="card hidden" id="s3">
+    <div class="row">
+      <button id="play">▶ Preview</button>
+      <button id="retake">↺ Retake</button>
+    </div>
+    <label>My voice volume <span class="val" id="vvV">130%</span></label>
+    <input type="range" id="vv" min="0" max="300" value="130">
+    <label>Music volume <span class="val" id="mvV">80%</span></label>
+    <input type="range" id="mv" min="0" max="150" value="80">
+    <label>Voice timing — move earlier if you sound late <span class="val" id="shV">0 ms</span></label>
+    <input type="range" id="sh" min="-200" max="500" step="10" value="0">
+    <div class="row" style="margin-top:14px">
+      <button class="primary" id="mkvid">Make my video</button>
+      <button id="mkwav">Audio only</button>
+    </div>
+    <p class="msg" id="m3"></p>
+    <div id="out"></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const vid = $('vid');
+let ctx, guideBuf, musicBuf, raw = null, chunks = [], startFrame = 0, recording = false;
+let micStream, micSrc, recNode, guideSrc, guideGain, recTimer, playing = null, progTimer;
+
+const WORKLET = `class Rec extends AudioWorkletProcessor{
+  process(inputs){const i=inputs[0]; if(i&&i[0]&&i[0].length){this.port.postMessage({f:currentFrame,d:i[0].slice(0)});} return true;}
+} registerProcessor('rec-proc',Rec);`;
+
+function show(id){ ['s1','s2','s3'].forEach(s => $(s).classList.toggle('hidden', s !== id)); }
+function msg(id, t, bad){ $(id).textContent = t; $(id).classList.toggle('err', !!bad); }
+function bindRange(id, suffix){ const f=()=>{$(id+'V').textContent=$(id).value+suffix}; $(id).addEventListener('input',f); f(); }
+bindRange('gv','%'); bindRange('vv','%'); bindRange('mv','%'); bindRange('sh',' ms');
+
+async function loadBuf(url){
+  const r = await fetch(url); if(!r.ok) throw new Error('Could not load '+url);
+  return await ctx.decodeAudioData(await r.arrayBuffer());
+}
+
+function startProgress(){
+  clearInterval(progTimer);
+  progTimer = setInterval(()=>{ const d = vid.duration||60; $('prog').style.width = Math.min(100, vid.currentTime/d*100)+'%'; }, 200);
+}
+function stopProgress(){ clearInterval(progTimer); }
+
+$('start').onclick = async () => {
+  $('start').disabled = true;
+  try {
+    if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
+      throw new Error('Microphone not available here. Open this page over https in Chrome or Safari.');
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    await ctx.resume();
+    msg('m1','Asking for microphone…');
+    micStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    msg('m1','Loading song…');
+    const blobUrl = URL.createObjectURL(new Blob([WORKLET],{type:'application/javascript'}));
+    await ctx.audioWorklet.addModule(blobUrl);
+    [guideBuf, musicBuf] = await Promise.all([loadBuf('guide.m4a'), loadBuf('music.m4a')]);
+    // estimated round-trip latency → default timing fix
+    let est = (ctx.outputLatency||0) + (ctx.baseLatency||0);
+    try { est += micStream.getAudioTracks()[0].getSettings().latency || 0; } catch(e){}
+    $('sh').value = Math.max(0, Math.min(400, Math.round(est*1000/10)*10)); $('sh').dispatchEvent(new Event('input'));
+    msg('m1','');
+    show('s2');
+  } catch (e) {
+    msg('m1', (e && e.name==='NotAllowedError') ? 'Microphone permission was blocked. Allow it in browser settings and reload.' : (e.message||String(e)), true);
+    $('start').disabled = false;
+  }
+};
+
+$('gv').addEventListener('input', ()=>{ if(guideGain) guideGain.gain.value = $('gv').value/100; });
+
+$('rec').onclick = async () => {
+  await ctx.resume();
+  $('rec').disabled = true; $('stop').disabled = false;
+  chunks = []; raw = null;
+  micSrc = ctx.createMediaStreamSource(micStream);
+  recNode = new AudioWorkletNode(ctx, 'rec-proc', {numberOfInputs:1, numberOfOutputs:1, outputChannelCount:[1]});
+  const mute = ctx.createGain(); mute.gain.value = 0;
+  micSrc.connect(recNode).connect(mute).connect(ctx.destination);
+  recNode.port.onmessage = e => { if (recording) chunks.push(e.data); };
+  recording = true;
+
+  const lead = 3.2;
+  const T = ctx.currentTime + lead;
+  startFrame = Math.round(T * ctx.sampleRate);
+  guideSrc = ctx.createBufferSource(); guideSrc.buffer = guideBuf;
+  guideGain = ctx.createGain(); guideGain.gain.value = $('gv').value/100;
+  guideSrc.connect(guideGain).connect(ctx.destination);
+  guideSrc.start(T);
+  guideSrc.onended = () => { if (recording) finishRec(); };
+
+  vid.pause(); vid.currentTime = 0;
+  let n = 3; $('count').textContent = n;
+  const cd = setInterval(()=>{ n--; $('count').textContent = n>0 ? n : ''; if(n<=0) clearInterval(cd); }, 1000);
+  recTimer = setTimeout(()=>{ vid.currentTime = 0; vid.play().catch(()=>{}); $('badge').style.display='block'; startProgress(); }, lead*1000 - 30);
+  msg('m2','Recording… sing along!');
+};
+
+$('stop').onclick = () => finishRec();
+
+function finishRec(){
+  if (!recording) return;
+  recording = false;
+  clearTimeout(recTimer);
+  try { guideSrc.onended = null; guideSrc.stop(); } catch(e){}
+  try { micSrc.disconnect(); recNode.disconnect(); } catch(e){}
+  vid.pause(); stopProgress(); $('badge').style.display='none'; $('count').textContent='';
+  $('rec').disabled = false; $('stop').disabled = true;
+  const sr = ctx.sampleRate, len = musicBuf.length + sr;   // 1s spare for timing shifts
+  raw = new Float32Array(len);
+  let got = 0;
+  for (const c of chunks) {
+    const off = c.f - startFrame;
+    for (let i = 0; i < c.d.length; i++) { const k = off + i; if (k >= 0 && k < len) { raw[k] = c.d[i]; got++; } }
+  }
+  chunks = [];
+  if (got < sr) { msg('m2','Recording too short — try again.', true); return; }
+  msg('m2','');
+  $('out').innerHTML = ''; msg('m3','');
+  show('s3');
+}
+
+function voiceBuffer(c){
+  const sr = c.sampleRate, n = musicBuf.length, s = Math.round(+$('sh').value/1000*sr);
+  const b = c.createBuffer(1, n, sr), d = b.getChannelData(0);
+  for (let i = 0; i < n; i++) { const j = i + s; d[i] = (j >= 0 && j < raw.length) ? raw[j] : 0; }
+  return b;
+}
+
+function stopPreview(){
+  if (playing) { playing.forEach(s=>{ try{s.stop()}catch(e){} }); playing = null; }
+  vid.pause(); stopProgress(); $('play').textContent = '▶ Preview';
+}
+
+$('play').onclick = async () => {
+  if (playing) { stopPreview(); return; }
+  await ctx.resume();
+  const m = ctx.createBufferSource(); m.buffer = musicBuf;
+  const v = ctx.createBufferSource(); v.buffer = voiceBuffer(ctx);
+  const mg = ctx.createGain(); mg.gain.value = $('mv').value/100;
+  const vg = ctx.createGain(); vg.gain.value = $('vv').value/100;
+  m.connect(mg).connect(ctx.destination); v.connect(vg).connect(ctx.destination);
+  const t = ctx.currentTime + 0.15; m.start(t); v.start(t);
+  vid.currentTime = 0; vid.play().catch(()=>{}); startProgress();
+  m.onended = stopPreview;
+  playing = [m, v]; $('play').textContent = '■ Stop preview';
+};
+
+$('retake').onclick = () => { stopPreview(); $('out').innerHTML=''; $('prog').style.width='0'; show('s2'); };
+
+async function renderMix(){
+  const sr = ctx.sampleRate, n = musicBuf.length;
+  const off = new OfflineAudioContext(2, n, sr);
+  const m = off.createBufferSource(); m.buffer = musicBuf;
+  const v = off.createBufferSource(); v.buffer = voiceBuffer(off);
+  const mg = off.createGain(); mg.gain.value = $('mv').value/100;
+  const vg = off.createGain(); vg.gain.value = $('vv').value/100;
+  const comp = off.createDynamicsCompressor();
+  comp.threshold.value = -6; comp.knee.value = 6; comp.ratio.value = 12; comp.attack.value = 0.003; comp.release.value = 0.15;
+  m.connect(mg).connect(comp); v.connect(vg).connect(comp); comp.connect(off.destination);
+  m.start(0); v.start(0);
+  return await off.startRendering();
+}
+
+function toWav(buf){
+  const ch = buf.numberOfChannels, n = buf.length, sr = buf.sampleRate;
+  const dv = new DataView(new ArrayBuffer(44 + n*ch*2));
+  const w = (o,s)=>{ for(let i=0;i<s.length;i++) dv.setUint8(o+i, s.charCodeAt(i)); };
+  w(0,'RIFF'); dv.setUint32(4, 36+n*ch*2, true); w(8,'WAVE'); w(12,'fmt ');
+  dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,ch,true); dv.setUint32(24,sr,true);
+  dv.setUint32(28,sr*ch*2,true); dv.setUint16(32,ch*2,true); dv.setUint16(34,16,true); w(36,'data'); dv.setUint32(40,n*ch*2,true);
+  const data = []; for (let c=0;c<ch;c++) data.push(buf.getChannelData(c));
+  let o = 44; for (let i=0;i<n;i++) for (let c=0;c<ch;c++) { const x = Math.max(-1, Math.min(1, data[c][i])); dv.setInt16(o, x<0 ? x*0x8000 : x*0x7FFF, true); o += 2; }
+  return new Blob([dv], {type:'audio/wav'});
+}
+
+function offer(blob, name){
+  const url = URL.createObjectURL(blob);
+  const box = document.createElement('div');
+  const a = document.createElement('a'); a.className='dl'; a.href=url; a.download=name; a.textContent='⬇ Download '+name;
+  box.appendChild(a);
+  try {
+    const file = new File([blob], name, {type: blob.type});
+    if (navigator.canShare && navigator.canShare({files:[file]})) {
+      const b = document.createElement('button'); b.textContent='Share (WhatsApp, Instagram…)'; b.style.marginTop='8px'; b.style.width='100%';
+      b.onclick = () => navigator.share({files:[file], title:'Barsaat karaoke'}).catch(()=>{});
+      box.appendChild(b);
+    }
+  } catch(e){}
+  $('out').appendChild(box);
+}
+
+$('mkwav').onclick = async () => {
+  stopPreview(); $('mkwav').disabled = true; msg('m3','Mixing…');
+  try { offer(toWav(await renderMix()), 'barsaat-original-my-voice.wav'); msg('m3','Done.'); }
+  catch(e){ msg('m3', 'Mixing failed: '+(e.message||e), true); }
+  $('mkwav').disabled = false;
+};
+
+$('mkvid').onclick = async () => {
+  stopPreview();
+  const types = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,opus','video/mp4','video/webm;codecs=vp8,opus','video/webm'];
+  const mime = window.MediaRecorder ? types.find(t => MediaRecorder.isTypeSupported(t)) : null;
+  if (!mime) { msg('m3','This browser cannot make videos. Use "Audio only" instead.', true); return; }
+  $('mkvid').disabled = $('mkwav').disabled = $('play').disabled = $('retake').disabled = true;
+  try {
+    msg('m3','Mixing…');
+    const mix = await renderMix();
+    await ctx.resume();
+    const canvas = document.createElement('canvas');
+    canvas.width = vid.videoWidth || 720; canvas.height = vid.videoHeight || 1280;
+    const g = canvas.getContext('2d');
+    const dest = ctx.createMediaStreamDestination();
+    const src = ctx.createBufferSource(); src.buffer = mix; src.connect(dest);
+    const stream = new MediaStream([...canvas.captureStream(30).getVideoTracks(), ...dest.stream.getAudioTracks()]);
+    const rec = new MediaRecorder(stream, {mimeType: mime, videoBitsPerSecond: 3000000, audioBitsPerSecond: 192000});
+    const parts = []; rec.ondataavailable = e => { if (e.data && e.data.size) parts.push(e.data); };
+    const done = new Promise(r => rec.onstop = r);
+    let drawing = true;
+    const draw = () => { if (!drawing) return; g.drawImage(vid, 0, 0, canvas.width, canvas.height); requestAnimationFrame(draw); };
+    vid.currentTime = 0;
+    await new Promise(r => { vid.muted = true; if (vid.readyState >= 2 && !vid.seeking) r(); else vid.addEventListener('seeked', r, {once:true}); });
+    draw();
+    rec.start(1000);
+    await vid.play();
+    src.start();
+    startProgress();
+    msg('m3','Making your video — takes 1 minute. Keep this screen open.');
+    await new Promise(r => src.onended = r);
+    await new Promise(r => setTimeout(r, 300));
+    rec.stop(); await done; drawing = false; vid.pause(); stopProgress();
+    const ext = mime.startsWith('video/mp4') ? 'mp4' : 'webm';
+    offer(new Blob(parts, {type: mime.split(';')[0]}), 'barsaat-original-karaoke-me.'+ext);
+    msg('m3', ext === 'webm' ? 'Done. (WebM file — if WhatsApp refuses it, send it to Claude to convert.)' : 'Done!');
+  } catch(e) { msg('m3','Video failed: '+(e.message||e)+'. Try "Audio only".', true); }
+  $('mkvid').disabled = $('mkwav').disabled = $('play').disabled = $('retake').disabled = false;
+};
+
+// ---- lyrics guide (on page only) ----
+const PHRASES = [[0.45,3.35],[3.85,5.4],[5.65,6.95],[7.35,8.45],[8.8,10.5],[10.9,17.5],[17.85,21.05],[21.6,23.05],[23.35,24.7],[25.05,27.2]];
+const LKEY = 'barsaat-lyrics';
+let LINES = [], lineStarts = [], lineAdj = 0, lastIdx = -2;
+function setLines(t){
+  LINES = t.split('\n').map(x => x.trim()).filter(Boolean);
+  const total = PHRASES.reduce((a,p) => a + p[1] - p[0], 0);
+  lineStarts = [];
+  for (let i = 0; i < LINES.length; i++) {
+    let target = total * i / LINES.length;
+    for (const [a,b] of PHRASES) { const d = b - a; if (target <= d + 1e-6) { lineStarts.push(a + target); break; } target -= d; }
+  }
+  lineAdj = 0; renderLyrics(0, true);
+}
+function renderLyrics(t, force){
+  if (!LINES.length) { $('lc').textContent = 'Tap "Edit lyrics" and paste the lyrics'; $('lp').textContent = $('ln').textContent = ''; return; }
+  let k = 0; for (let i = 0; i < lineStarts.length; i++) if (lineStarts[i] <= t + 0.5) k = i;
+  k = Math.max(0, Math.min(LINES.length - 1, k + lineAdj));
+  if (k === lastIdx && !force) return; lastIdx = k;
+  $('lp').textContent = LINES[k-1] || ''; $('lc').textContent = LINES[k]; $('ln').textContent = LINES[k+1] || '';
+}
+setInterval(() => renderLyrics(vid.currentTime || 0), 120);
+$('lprev').onclick = () => { lineAdj--; renderLyrics(vid.currentTime || 0, true); };
+$('lnext').onclick = () => { lineAdj++; renderLyrics(vid.currentTime || 0, true); };
+$('ledit').onclick = () => $('lyrEdit').classList.toggle('hidden');
+$('lsave').onclick = () => {
+  const t = $('lyrText').value; try { localStorage.setItem(LKEY, t); } catch(e){}
+  setLines(t); $('lyrEdit').classList.add('hidden');
+};
+(function(){ let t = ''; try { t = localStorage.getItem(LKEY) || ''; } catch(e){}
+  $('lyrText').value = t; setLines(t); if (!LINES.length) $('lyrEdit').classList.remove('hidden'); })();
+</script>
+</body>
+</html>
